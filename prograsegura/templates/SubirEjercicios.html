@@ -1,0 +1,16 @@
+
+{%block titulo%}Registro editorial{% endblock%}
+{%block encabezado%}Registra una editorial{%endblock%}
+{% block contenido%}
+
+
+
+
+<form action="/SubirEjercicios" method="POST">
+{% csrf_token %}
+<div class="mb-3 mt-3">
+<label for="Entrada" class="form-label">Nombre:</label>
+<input type="text" class="form-control" id="Entrada" placeholder="Entrada" name="Entrada">
+</div>
+<button type="submit" class="btn btn-primary">Registrar</button>
+{% endblock %}
