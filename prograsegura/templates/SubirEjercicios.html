@@ -6,6 +6,7 @@
 
 
 
+<<<<<<< HEAD
 <form action="/verificar_scripts" method="POST">
 {% csrf_token %}
 <div class="mb-3 mt-3">
@@ -17,5 +18,13 @@
 <input type="text" class="form-control" id="Salida_esperada" placeholder="Salida_esperada" name="Salida_esperada">
 </div>
 
+=======
+<form action="/SubirEjercicios" method="POST">
+{% csrf_token %}
+<div class="mb-3 mt-3">
+<label for="Entrada" class="form-label">Nombre:</label>
+<input type="text" class="form-control" id="Entrada" placeholder="Entrada" name="Entrada">
+</div>
+>>>>>>> f383b1942dabeb0c7c70fa3ed0e31a9077ed13b6
 <button type="submit" class="btn btn-primary">Registrar</button>
 {% endblock %}
