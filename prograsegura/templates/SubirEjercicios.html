@@ -1,0 +1,21 @@
+
+{%block titulo%}Registro editorial{% endblock%}
+{%block encabezado%}Registra una editorial{%endblock%}
+{% block contenido%}
+
+
+
+
+<form action="/verificar_scripts" method="POST">
+{% csrf_token %}
+<div class="mb-3 mt-3">
+<label for="Entrada" class="form-label">Entrada:</label>
+<input type="text" class="form-control" id="Entrada" placeholder="Entrada" name="Entrada">
+</div>
+<div class="mb-3 mt-3">
+<label for="Salida_esperada" class="form-label">Salida esperada:</label>
+<input type="text" class="form-control" id="Salida_esperada" placeholder="Salida_esperada" name="Salida_esperada">
+</div>
+
+<button type="submit" class="btn btn-primary">Registrar</button>
+{% endblock %}
