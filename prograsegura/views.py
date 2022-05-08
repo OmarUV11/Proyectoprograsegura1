@@ -28,3 +28,9 @@ def verificar_scripts(request):
 >>>>>>> f383b1942dabeb0c7c70fa3ed0e31a9077ed13b6
   return render(request,t)
 
+def password_valido(password, pass_hasheado, salt):
+   binario = (password + salt).encode('utf-8')
+   hasher = hashlib.sha256()
+   hasher.update(binario)
+   return hasher.hexdigest() == pass_hasheado
+
