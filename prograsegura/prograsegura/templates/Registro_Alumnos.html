@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block titulo %}Regristro Alumnos{% endblock %}
+{% block encabezado %}Registrar Alumnos{% endblock %}
+{% block contenido %}
+{% if errores %}
+<div class="panel panel-danger">
+        <div style="background-color:#FFFF00" class="panel-heading">Se han encontrado los siguientes errores : </div>
+        <div class="panel-body">
+                <ol>
+                        {% for error in errores %}
+                        <li style='color: red'>{{ error }}</li>
+                        {% endfor %}
+                </ol>
+        </div>
+</div>
+
+{% endif %}
+
+<form action="/Registrar_Alumnos" method="POST">
+  {% csrf_token %}
+ <div class="contenedor">
+  <div class="mb-3 mt-3">
+    <label style="color:#FFFFFF" for="nombrebot" class="form-label">Nombre del Alumno:</label>
+    <input type="text" class="form-control" id="nombrebot" placeholder="Nombre del Bot" name="nombrebot">
+  </div>
+
+  <div class="mb-3 mt-3">
+    <label style="color:#FFFFFF"  for="host" class="form-label">Hostname:</label>
+    <input type="text" class="form-control" id="host" placeholder="Hostname" name="host">
+  </div>
+
+  <div class="mb-3 mt-3">
+    <label style="color:#FFFFFF" for="Direccion" class="form-label">Direccion IP:</label>
+    <input type="text" class="form-control" id="Direccion" placeholder="Direccion IP" name="Direccion">
+  </div>
+
+  <div class="mb-3 mt-3">
+    <label style="color:#FFFFFF" for="password" class="form-label">Password:</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+
+  
+  <button type="submit" class="btn btn-primary">Registrar</button>
+  </div>
+</form>
+
+
+{% endblock %}
