@@ -1,0 +1,338 @@
+22-May-22 04:01:20 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+22-May-22 04:04:11 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+22-May-22 04:07:25 - INFO - usuario logueado:Saul
+22-May-22 04:16:32 - WARNING - Not Found: /
+22-May-22 04:16:37 - WARNING - Not Found: /favicon.ico
+22-May-22 04:16:45 - ERROR - Internal Server Error: /verificar_token
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 55, in verificar_token
+    return render(request, t)
+  File "/usr/lib/python3/dist-packages/django/shortcuts.py", line 36, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/lib/python3/dist-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/usr/lib/python3/dist-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/usr/lib/python3/dist-packages/django/template/backends/django.py", line 34, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/usr/lib/python3/dist-packages/django/template/engine.py", line 143, in get_template
+    template, origin = self.find_template(template_name)
+  File "/usr/lib/python3/dist-packages/django/template/engine.py", line 125, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/usr/lib/python3/dist-packages/django/template/loaders/base.py", line 29, in get_template
+    return Template(
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 156, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 194, in compile_nodelist
+    return parser.parse()
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 478, in parse
+    raise self.error(token, e)
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 476, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/lib/python3/dist-packages/django/template/loader_tags.py", line 266, in do_extends
+    nodelist = parser.parse()
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 478, in parse
+    raise self.error(token, e)
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 476, in parse
+    compiled_result = compile_func(self, token)
+  File "/usr/lib/python3/dist-packages/django/template/loader_tags.py", line 209, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 483, in parse
+    self.unclosed_block_tag(parse_until)
+  File "/usr/lib/python3/dist-packages/django/template/base.py", line 544, in unclosed_block_tag
+    raise self.error(token, msg)
+django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 3: 'block'. Looking for one of: endblock.
+22-May-22 04:16:45 - WARNING - Not Found: /favicon.ico
+22-May-22 04:17:14 - WARNING - Not Found: /favicon.ico
+22-May-22 04:19:38 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+22-May-22 04:19:57 - INFO - usuario logueado:Saul
+22-May-22 04:20:07 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+22-May-22 04:20:22 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+22-May-22 04:23:16 - WARNING - Not Found: /
+22-May-22 04:25:35 - INFO - usuario logueado:Saul
+22-May-22 04:26:17 - WARNING - Not Found: /favicon.ico
+22-May-22 04:55:29 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:28:49 - WARNING - Not Found: /
+23-May-22 03:28:51 - WARNING - Not Found: /favicon.ico
+23-May-22 03:29:34 - WARNING - Not Found: /favicon.ico
+23-May-22 03:30:01 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 111, in Registro_Alumnos
+    print(alumno.contrasena)
+AttributeError: 'Alumnos' object has no attribute 'contrasena'
+23-May-22 03:30:47 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:30:51 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    raise ValueError(
+ValueError: The view pruebas.views.Registro_Alumnos didn't return an HttpResponse object. It returned None instead.
+23-May-22 03:30:51 - WARNING - Not Found: /favicon.ico
+23-May-22 03:31:24 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:31:29 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    raise ValueError(
+ValueError: The view pruebas.views.Registro_Alumnos didn't return an HttpResponse object. It returned None instead.
+23-May-22 03:32:18 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:44:30 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:45:56 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:46:21 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 111, in Registro_Alumnos
+    errores = verificacion_de_contrasenas(contrasena)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 122, in verificacion_de_contrasenas
+    if alumno.Contraseña == '':
+NameError: name 'alumno' is not defined
+23-May-22 03:47:01 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:47:09 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 111, in Registro_Alumnos
+    errores = verificacion_de_contrasenas(alumno)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 124, in verificacion_de_contrasenas
+    if len(alumno.Contrasena) < 10:
+AttributeError: 'Alumnos' object has no attribute 'Contrasena'
+23-May-22 03:47:31 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:48:28 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:50:35 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 03:53:25 - INFO - /home/omarconde/pruebas/modelo/models.py changed, reloading.
+23-May-22 04:09:26 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:10:17 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:11:11 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:12:53 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 111, in Registro_Alumnos
+    errores = verificacion_de_contrasenas(alumno)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 128, in verificacion_de_contrasenas
+    errores_password.append('La contraseña al menos debe contener una letra mayúscula')
+NameError: name 'errores_password' is not defined
+23-May-22 04:13:15 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:16:48 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:21:14 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:21:42 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:23:45 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:25:07 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:25:15 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 111, in Registro_Alumnos
+    errores = verificacion_de_contrasenas(alumno)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 124, in verificacion_de_contrasenas
+    errores_password.append('La contraseña no debe contener espacios')
+NameError: name 'errores_password' is not defined
+23-May-22 04:25:38 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:27:06 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:27:45 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:33:36 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:33:39 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 04:33:45 - WARNING - Not Found: /favicon.ico
+23-May-22 04:39:44 - WARNING - Not Found: /favicon.ico
+23-May-22 05:04:33 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 23:09:47 - WARNING - Not Found: /
+23-May-22 23:11:39 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 23:13:46 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 23:13:56 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 112, in Registro_Alumnos
+    errores = verificacion_de_contrasenas(alumno)
+NameError: name 'verificacion_de_contrasenas' is not defined
+23-May-22 23:15:26 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 23:16:52 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 23:16:57 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 112, in Registro_Alumnos
+    errores = recoleccion_de_errores_del_registro(alumno)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 152, in recoleccion_de_errores_del_registro
+    errores_contrasena = verificacion_de_contrasenas(alumno)
+NameError: name 'verificacion_de_contrasenas' is not defined
+23-May-22 23:17:29 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 23:17:57 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+23-May-22 23:57:57 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:03:06 - INFO - /home/omarconde/pruebas/modelo/models.py changed, reloading.
+24-May-22 00:07:24 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:07:50 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:09:29 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:11:32 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 114, in Registro_Alumnos
+    Elsalt = get_random_string(length=16)
+NameError: name 'get_random_string' is not defined
+24-May-22 00:11:33 - WARNING - Not Found: /favicon.ico
+24-May-22 00:12:04 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:12:14 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 116, in Registro_Alumnos
+    binario = (contrasena + Elsalt).enconde('utf-8')
+AttributeError: 'str' object has no attribute 'enconde'
+24-May-22 00:13:36 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:13:46 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 117, in Registro_Alumnos
+    hasher = hashlib.sha256()
+NameError: name 'hashlib' is not defined
+24-May-22 00:14:38 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:14:45 - ERROR - Internal Server Error: /Registro_Alumnos
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 117, in Registro_Alumnos
+    hasher = hashlib.sha256()
+NameError: name 'hashlib' is not defined
+24-May-22 00:15:09 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:21:10 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:21:51 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 90, in login
+    mandar_mensaje_al_bot(request)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 36, in mandar_mensaje_al_bot
+    datos_guardados = models.Alumnos.objects.get(NombreAlumno=nombre)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 410, in get
+    raise self.model.MultipleObjectsReturned(
+modelo.models.Alumnos.MultipleObjectsReturned: get() returned more than one Alumnos -- it returned 9!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 94, in login
+    return render(request,t,{'errores',errores})
+UnboundLocalError: local variable 't' referenced before assignment
+24-May-22 00:21:53 - WARNING - Not Found: /favicon.ico
+24-May-22 00:26:41 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:27:53 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:28:03 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    raise ValueError(
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+24-May-22 00:28:05 - WARNING - Not Found: /favicon.ico
+24-May-22 00:28:40 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:30:49 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 87, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre,Contraseña=contraseña)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 95, in login
+    return render(request,t,{'errores',errores})
+UnboundLocalError: local variable 't' referenced before assignment
+24-May-22 00:32:17 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:32:25 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 87, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre,Contraseña=contraseña)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 95, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+24-May-22 00:33:28 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:39:24 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 00:39:56 - INFO - usuario logueado:David
