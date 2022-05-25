@@ -14,7 +14,8 @@ class Alumnos(models.Model):
       Token_tel = models.CharField(max_length = 60, null=True)
       Token_Env = models.CharField(max_length = 60, null=True)     
       Token_Tem = models.DateTimeField(null=True)
-      salt = models.CharField(max_length = 16, default="", null=True )
+      salt = models.CharField(max_length = 100, default="", null=True )
+      Estado_token = models.CharField(max_length = 30 , null=True)
 
 class IntentosIP(models.Model):
       ip = models.GenericIPAddressField(unique=True, null=True)

@@ -336,3 +336,319 @@ TypeError: unhashable type: 'list'
 24-May-22 00:33:28 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
 24-May-22 00:39:24 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
 24-May-22 00:39:56 - INFO - usuario logueado:David
+24-May-22 01:58:15 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 87, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 95, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+24-May-22 01:58:33 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 87, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 95, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+24-May-22 02:00:56 - INFO - usuario logueado:Saul
+24-May-22 02:01:05 - INFO - usuario logueado:Saul
+24-May-22 02:02:37 - INFO - usuario logueado:Saul
+24-May-22 02:24:52 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:24:57 - WARNING - Not Found: /favicon.ico
+24-May-22 02:25:28 - INFO - usuario logueado:Saul
+24-May-22 02:25:30 - WARNING - Not Found: /favicon.ico
+24-May-22 02:25:35 - WARNING - Not Found: /favicon.ico
+24-May-22 02:26:16 - WARNING - Not Found: /favicon.ico
+24-May-22 02:26:34 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    raise ValueError(
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+24-May-22 02:26:35 - WARNING - Not Found: /favicon.ico
+24-May-22 02:27:23 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:27:29 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 88, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre, Contraseña=contraseña)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 96, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+24-May-22 02:29:09 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:29:16 - WARNING - Not Found: /favicon.ico
+24-May-22 02:29:38 - INFO - usuario logueado:Saul
+24-May-22 02:29:45 - INFO - usuario logueado:Saul
+24-May-22 02:33:20 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:39:58 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:40:07 - INFO - usuario logueado:Saul
+24-May-22 02:41:35 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:41:40 - INFO - usuario logueado:Saul
+24-May-22 02:41:49 - INFO - usuario logueado:Saul
+24-May-22 02:43:12 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:43:58 - INFO - usuario logueado:Saul
+24-May-22 02:44:56 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:45:04 - INFO - usuario logueado:Saul
+24-May-22 02:46:09 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:46:25 - INFO - usuario logueado:Saul
+24-May-22 02:49:14 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:49:56 - WARNING - Not Found: /favicon.ico
+24-May-22 02:51:09 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:51:21 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:53:40 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:53:57 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 93, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 101, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+24-May-22 02:54:10 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 93, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 101, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+24-May-22 02:54:58 - WARNING - Not Found: /favicon.ico
+24-May-22 02:55:46 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:56:52 - INFO - usuario logueado:Saul
+24-May-22 02:57:01 - INFO - usuario logueado:Saul
+24-May-22 02:57:53 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 02:58:11 - INFO - usuario logueado:Saul
+24-May-22 02:59:23 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:00:14 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:00:42 - INFO - usuario logueado:Saul
+24-May-22 03:00:53 - INFO - usuario logueado:Saul
+24-May-22 03:03:19 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:03:27 - WARNING - Not Found: /favicon.ico
+24-May-22 03:03:48 - INFO - usuario logueado:Saul
+24-May-22 03:04:02 - INFO - usuario logueado:Saul
+24-May-22 03:04:31 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:04:58 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    raise ValueError(
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+24-May-22 03:08:06 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:08:33 - INFO - usuario logueado:Saul
+24-May-22 03:08:38 - INFO - usuario logueado:Saul
+24-May-22 03:21:34 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:21:44 - WARNING - Not Found: /favicon.ico
+24-May-22 03:22:03 - INFO - usuario logueado:Saul
+24-May-22 03:22:14 - INFO - usuario logueado:Saul
+24-May-22 03:23:07 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:25:01 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:29:26 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:32:37 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:34:22 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:42:17 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 03:54:42 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:17:33 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:17:48 - WARNING - Not Found: /
+24-May-22 04:18:18 - INFO - usuario logueado:Saul
+24-May-22 04:18:31 - INFO - usuario logueado:Saul
+24-May-22 04:21:56 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:22:01 - ERROR - Internal Server Error: /verificar_token
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 63, in verificar_token
+    token_almacenado = models.Alumnos.objects.get(Token_Env=token)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 76, in verificar_token
+    if token_almacenado.Token_Env == Token:
+UnboundLocalError: local variable 'token_almacenado' referenced before assignment
+24-May-22 04:22:02 - WARNING - Not Found: /favicon.ico
+24-May-22 04:22:14 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:22:24 - ERROR - Internal Server Error: /verificar_token
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 63, in verificar_token
+    token_almacenado = models.Alumnos.objects.get(Token_Env=token)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 76, in verificar_token
+    if token_almacenado.Token_Env == token:
+UnboundLocalError: local variable 'token_almacenado' referenced before assignment
+24-May-22 04:23:22 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:23:30 - ERROR - Internal Server Error: /verificar_token
+Traceback (most recent call last):
+  File "/home/omarconde/pruebas/pruebas/views.py", line 63, in verificar_token
+    token_almacenado = models.Alumnos.objects.get(Token_Env=token)
+  File "/usr/lib/python3/dist-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/lib/python3/dist-packages/django/db/models/query.py", line 406, in get
+    raise self.model.DoesNotExist(
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/omarconde/pruebas/pruebas/views.py", line 76, in verificar_token
+    if token_almacenado.Token_Env == token:
+UnboundLocalError: local variable 'token_almacenado' referenced before assignment
+24-May-22 04:24:49 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:25:17 - INFO - usuario logueado:Saul
+24-May-22 04:27:09 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:27:35 - INFO - usuario logueado:Saul
+24-May-22 04:28:27 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:28:31 - INFO - usuario logueado:Saul
+24-May-22 04:28:37 - INFO - usuario logueado:Saul
+24-May-22 04:29:19 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:29:29 - INFO - usuario logueado:Saul
+24-May-22 04:35:38 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:36:07 - INFO - usuario logueado:Saul
+24-May-22 04:37:39 - INFO - usuario logueado:Saul
+24-May-22 04:38:48 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:39:40 - INFO - usuario logueado:Saul
+24-May-22 04:39:56 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:40:00 - INFO - usuario logueado:Saul
+24-May-22 04:40:40 - INFO - usuario logueado:Saul
+24-May-22 04:40:53 - INFO - usuario logueado:Saul
+24-May-22 04:41:20 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:41:25 - INFO - usuario logueado:Saul
+24-May-22 04:41:55 - INFO - usuario logueado:Saul
+24-May-22 04:43:48 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:44:04 - INFO - usuario logueado:Saul
+24-May-22 04:44:13 - INFO - usuario logueado:Saul
+24-May-22 04:45:14 - INFO - usuario logueado:Saul
+24-May-22 04:45:18 - INFO - usuario logueado:Saul
+24-May-22 04:47:04 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 04:47:47 - INFO - usuario logueado:Saul
+24-May-22 04:52:11 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 05:09:16 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+24-May-22 05:18:13 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:22:07 - WARNING - Not Found: /favicon.ico
+25-May-22 01:23:48 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:24:33 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:26:06 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:31:06 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:31:45 - INFO - usuario logueado:Saul
+25-May-22 01:32:46 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:32:54 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:33:00 - INFO - usuario logueado:Saul
+25-May-22 01:33:50 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:34:05 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    raise ValueError(
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 01:34:29 - INFO - usuario logueado:Saul
+25-May-22 01:41:16 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:41:34 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:42:08 - INFO - usuario logueado:Saul
+25-May-22 01:42:18 - INFO - usuario logueado:Saul
+25-May-22 01:43:13 - INFO - usuario logueado:Saul
+25-May-22 01:43:20 - INFO - usuario logueado:Saul
+25-May-22 01:45:48 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 01:47:05 - INFO - /home/omarconde/pruebas/modelo/models.py changed, reloading.

@@ -40,7 +40,7 @@ def mandar_mensaje_al_bot(request):
     send_text = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + Chat_id + '&parse_mode=Markdown&text='+ mensaje_bot
     requests.get(send_text)
     models.Alumnos()
-    models.Alumnos.objects.filter(NombreAlumno=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now())
+    models.Alumnos.objects.filter(NombreAlumno=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now(), Estado_token="Valido")
     
 
 def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
@@ -59,7 +59,6 @@ def verificar_token(request):
         ip_cliente = get_client_ip(request)
         if puede_hacer_peticion(ip_cliente):
            token = request.POST.get('Token','').strip()
-           print(token)
            try:
                token_almacenado = models.Alumnos.objects.get(Token_Env=token)
                if (disminuir_tiempo_actual_yalmaceno(token_almacenado.Token_Tem) > 160):  
@@ -68,12 +67,21 @@ def verificar_token(request):
                request.session['logueado2'] = True
                request.session['nombre'] = nombre
                logging.info("usuario logueado:" + nombre)
-               return redirect('/verificar_scripts')
+               models.Alumnos.objects.filter(NombreAlumno=nombre).update(Estado_token="Invalido")
+               if token_almacenado.Estado_token == "Invalido":
+                  errores =['Token ya utilizado']
+                  return render(request,t,{'errores': errores})
+               else:
+                  return redirect('/verificar_scripts')
            except:
                errores = ['token incorrecto']
                return render(request, "login.html", {'errores': errores})
         else:
            return HttpResponse("Agotaste tus intentos espera 1 minuto") 
+
+
+
+
 
 def login(request):
     if request.method == 'GET':
