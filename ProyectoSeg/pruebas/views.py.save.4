@@ -84,27 +84,25 @@ def verificar_token(request):
 
 
 def login(request):
-    logueado = request.session.get('logueado', False)
     if request.method == 'GET':
        t = 'login.html'
        return render(request,t)
     elif request.method == 'POST':
         nombre = request.POST.get('nombres','')
         contraseña =  request.POST.get('password','')
-        if puede_hacer_peticion(get_client_ip(request)): 
-           try:
-               alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
-               if password_valido(contraseña, alumno.Contraseña, alumno.salt):
-                  request.session['logueado']= True
-                  request.session['nombre'] = nombre
-                  mandar_mensaje_al_bot(request)
-                  return redirect('/verificar_token')
-           except:
-                  errores = ['crendeicales o nombre incorrectas']
-                  return render(request,'login.html',{'errores':errores})
-
+        if puede_hacer_peticion(get_client_ip(request)):
+              try:
+                  alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+                  if password_valido(contraseña, alumno.Contraseña, alumno.salt):
+                     request.session['logueado']= True
+                     request.session['nombre'] = nombre
+                     mandar_mensaje_al_bot(request)
+                     return redirect('/verificar_token')
+              except:
+                     errores = ['crendeicales o nombre incorrectas']
+                     return render(request,'login.html',{'errores',errores})
         else:
-             return HttpResponse("Agotaste todos los intentos prueba intente en un minuto")
+             return HttpResponse("Agotaste todos los intentos prueba intente en un minuto") 
 
 def password_valido(password, pass_hasheado, salt):
    binario = (password + salt).encode('utf-8')

@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$^i69%l02t@k3vz=(sr!l7xzp9($)2yk_wec79407w5ueg*qm8'
+SECRET_KEY = os.environ.get('LLAVEDJANGO')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('EstadoDEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'pruebas.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR / 'db.sqlite3'),
+        'ENGINE': os.environ.get('BaseENGINE'),
+        'NAME': os.environ.get('BaseNAME'),
+	'USER': os.environ.get('BaseUSER'),
+	'PASSWORD': os.environ.get('BasePASSWORD'),
+	'HOST': os.environ.get('BaseHOST'),
+	'PORT': os.environ.get('BasePORT'),
     }
 }
 
@@ -120,7 +124,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
+ 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTENTOS_MAXIMOS_PETICION = 3
 VENTANA_SEGUNDOS_INTENTOS_PETICION = 30

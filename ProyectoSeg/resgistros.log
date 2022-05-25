@@ -671,3 +671,279 @@ ValueError: The view pruebas.views.login didn't return an HttpResponse object. I
 25-May-22 20:34:39 - INFO - usuario logueado:Saul
 25-May-22 20:35:20 - INFO - usuario logueado:Saul
 25-May-22 20:39:38 - INFO - usuario logueado:Saul
+25-May-22 21:02:05 - INFO - usuario logueado:Erik luna villa
+25-May-22 21:02:05 - ERROR - Internal Server Error: /verificar_scripts
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 24, in verificar_scripts
+    salida = subprocess.Popen(Comando,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  File "/usr/lib/python3.7/subprocess.py", line 775, in __init__
+    restore_signals, start_new_session)
+  File "/usr/lib/python3.7/subprocess.py", line 1522, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/omarconde/hola.sh': '/home/omarconde/hola.sh'
+25-May-22 21:02:52 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py changed, reloading.
+25-May-22 21:03:27 - INFO - usuario logueado:Erik luna villa
+25-May-22 21:14:00 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 93, in login
+    if puede_hacer_peticion(get_client_ip(request)):
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 219, in puede_hacer_peticion
+    if not esta_tiempo_en_ventana(registro.timestamp):
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 203, in esta_tiempo_en_ventana
+    if resta.seconds < conf.VENTANA_SEGUNDOS_INTENTOS_PETICION:
+AttributeError: module 'pruebas.settings' has no attribute 'VENTANA_SEGUNDOS_INTENTOS_PETICION'
+25-May-22 21:18:51 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 95, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+  File "/usr/local/lib/python3.7/dist-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/django/db/models/query.py", line 437, in get
+    self.model._meta.object_name
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 103, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+25-May-22 21:21:27 - INFO - usuario logueado:Omar
+25-May-22 21:21:38 - INFO - usuario logueado:Omar
+25-May-22 21:22:31 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 21:46:13 - ERROR - Invalid HTTP_HOST header: '8c4c-177-240-172-208.ngrok.io'. You may need to add '8c4c-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:46:14 - WARNING - Bad Request: /
+25-May-22 21:46:15 - ERROR - Invalid HTTP_HOST header: '8c4c-177-240-172-208.ngrok.io'. You may need to add '8c4c-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:46:15 - WARNING - Bad Request: /
+25-May-22 21:46:16 - ERROR - Invalid HTTP_HOST header: '8c4c-177-240-172-208.ngrok.io'. You may need to add '8c4c-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:46:17 - WARNING - Bad Request: /favicon.ico
+25-May-22 21:48:32 - ERROR - Invalid HTTP_HOST header: '368e-177-240-172-208.ngrok.io'. You may need to add '368e-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:48:33 - WARNING - Bad Request: /
+25-May-22 21:48:33 - ERROR - Invalid HTTP_HOST header: '368e-177-240-172-208.ngrok.io'. You may need to add '368e-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:48:34 - WARNING - Bad Request: /
+25-May-22 21:48:35 - ERROR - Invalid HTTP_HOST header: '368e-177-240-172-208.ngrok.io'. You may need to add '368e-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:48:36 - WARNING - Bad Request: /favicon.ico
+25-May-22 21:50:50 - ERROR - Invalid HTTP_HOST header: 'b34b-177-240-172-208.ngrok.io'. You may need to add 'b34b-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:50:50 - WARNING - Bad Request: /
+25-May-22 21:50:52 - ERROR - Invalid HTTP_HOST header: 'b34b-177-240-172-208.ngrok.io'. You may need to add 'b34b-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:50:53 - WARNING - Bad Request: /favicon.ico
+25-May-22 21:51:24 - WARNING - Not Found: /
+25-May-22 21:51:25 - WARNING - Not Found: /
+25-May-22 21:51:26 - WARNING - Not Found: /favicon.ico
+25-May-22 21:53:30 - ERROR - Invalid HTTP_HOST header: '95e6-177-240-172-208.ngrok.io'. You may need to add '95e6-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:53:31 - WARNING - Bad Request: /
+25-May-22 21:53:36 - ERROR - Invalid HTTP_HOST header: '95e6-177-240-172-208.ngrok.io'. You may need to add '95e6-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:53:36 - WARNING - Bad Request: /
+25-May-22 21:53:37 - ERROR - Invalid HTTP_HOST header: '95e6-177-240-172-208.ngrok.io'. You may need to add '95e6-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:53:37 - WARNING - Bad Request: /favicon.ico
+25-May-22 21:53:57 - ERROR - Invalid HTTP_HOST header: '95e6-177-240-172-208.ngrok.io'. You may need to add '95e6-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:53:57 - WARNING - Bad Request: /
+25-May-22 21:53:58 - ERROR - Invalid HTTP_HOST header: '95e6-177-240-172-208.ngrok.io'. You may need to add '95e6-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:53:58 - WARNING - Bad Request: /favicon.ico
+25-May-22 21:54:13 - ERROR - Invalid HTTP_HOST header: '95e6-177-240-172-208.ngrok.io'. You may need to add '95e6-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:54:13 - WARNING - Bad Request: /
+25-May-22 21:54:14 - ERROR - Invalid HTTP_HOST header: '95e6-177-240-172-208.ngrok.io'. You may need to add '95e6-177-240-172-208.ngrok.io' to ALLOWED_HOSTS.
+25-May-22 21:54:14 - WARNING - Bad Request: /favicon.ico
+25-May-22 21:59:25 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/settings.py changed, reloading.
+25-May-22 22:00:32 - WARNING - Not Found: /
+25-May-22 22:00:33 - WARNING - Not Found: /favicon.ico
+25-May-22 22:15:11 - WARNING - Not Found: /
+25-May-22 22:15:49 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 22:19:09 - WARNING - Not Found: /
+25-May-22 22:19:29 - WARNING - Not Found: /l
+25-May-22 22:20:35 - WARNING - Not Found: /favicon.ico
+25-May-22 22:21:06 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 95, in login
+    alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+  File "/usr/local/lib/python3.7/dist-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/django/db/models/query.py", line 437, in get
+    self.model._meta.object_name
+modelo.models.Alumnos.DoesNotExist: Alumnos matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py", line 103, in login
+    return render(request,'login.html',{'errores',errores})
+TypeError: unhashable type: 'list'
+25-May-22 22:25:23 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py changed, reloading.
+25-May-22 22:25:41 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 22:27:32 - WARNING - Not Found: /favicon.ico
+25-May-22 22:27:36 - WARNING - Not Found: /favicon.ico
+25-May-22 22:27:50 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 22:33:41 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 22:37:37 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py changed, reloading.
+25-May-22 22:37:47 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 22:38:40 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py changed, reloading.
+25-May-22 22:49:45 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py changed, reloading.
+25-May-22 22:50:06 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 22:59:10 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 22:59:13 - WARNING - Not Found: /favicon.ico
+25-May-22 23:05:25 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:07:15 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py changed, reloading.
+25-May-22 23:13:22 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:13:48 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:14:34 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:15:10 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:16:05 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:16:41 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:18:55 - INFO - usuario logueado:Erik luna villa
+25-May-22 23:19:35 - INFO - usuario logueado:Erik luna villa
+25-May-22 23:19:49 - INFO - usuario logueado:Erik luna villa
+25-May-22 23:20:15 - INFO - /home/erik/Proyecto_ver_2/Proyectoprograsegura1/ProyectoSeg/pruebas/views.py changed, reloading.
+25-May-22 23:20:26 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 23:21:37 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 188, in _get_response
+    self.check_response(response, callback)
+  File "/usr/local/lib/python3.7/dist-packages/django/core/handlers/base.py", line 311, in check_response
+    "instead." % name
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.

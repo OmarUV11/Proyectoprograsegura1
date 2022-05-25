@@ -8,7 +8,7 @@ class Usuario(models.Model):
 class Alumnos(models.Model):
       NombreAlumno = models.CharField(max_length = 50)
       Matricula =  models.CharField(max_length = 20)
-      Contraseña = models.CharField(max_length = 20)
+      Contraseña = models.CharField(max_length = 100)
       Tipocuenta = models.CharField(max_length = 20, null=True)
       Chat_id = models.CharField(max_length = 40, null=True)
       Token_tel = models.CharField(max_length = 60, null=True)
