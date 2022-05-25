@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
-{%block titulo%}Verificacion de Scripts{% endblock%}
+{% block titulo %}Verificacion de Scripts{% endblock %}
+{% block encabezado %}Verificacion de Scripts{% endblock %}
 {% block contenido%}
-
-
-
-
 <form action="/verificar_scripts" method="POST">
 {% csrf_token %}
 <div class="mb-3 mt-3">

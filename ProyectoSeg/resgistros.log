@@ -652,3 +652,22 @@ ValueError: The view pruebas.views.login didn't return an HttpResponse object. I
 25-May-22 01:43:20 - INFO - usuario logueado:Saul
 25-May-22 01:45:48 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
 25-May-22 01:47:05 - INFO - /home/omarconde/pruebas/modelo/models.py changed, reloading.
+25-May-22 20:24:56 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 20:25:24 - INFO - /home/omarconde/pruebas/pruebas/views.py changed, reloading.
+25-May-22 20:25:45 - WARNING - Not Found: /
+25-May-22 20:25:46 - WARNING - Not Found: /favicon.ico
+25-May-22 20:27:40 - INFO - usuario logueado:Saul
+25-May-22 20:27:45 - INFO - usuario logueado:Saul
+25-May-22 20:33:18 - WARNING - Not Found: /favicon.ico
+25-May-22 20:33:38 - WARNING - Not Found: /
+25-May-22 20:33:45 - WARNING - Not Found: /
+25-May-22 20:34:16 - ERROR - Internal Server Error: /login
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/lib/python3/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    raise ValueError(
+ValueError: The view pruebas.views.login didn't return an HttpResponse object. It returned None instead.
+25-May-22 20:34:39 - INFO - usuario logueado:Saul
+25-May-22 20:35:20 - INFO - usuario logueado:Saul
+25-May-22 20:39:38 - INFO - usuario logueado:Saul

@@ -16,6 +16,7 @@ import re
 import hashlib
 
 def verificar_scripts(request):
+
   t = 'SubirEjercicios.html'
   Entrada = request.POST.get('Entrada','')
   Salida_esperada =  request.POST.get('Salida_esperada','')
@@ -31,7 +32,7 @@ def verificar_scripts(request):
 
 
 def mandar_mensaje_al_bot(request):
-    print("Entro la funcion =)")
+    
     nombre = request.session.get('nombre','anonimo')
     datos_guardados = models.Alumnos.objects.get(NombreAlumno=nombre)
     Chat_id = datos_guardados.Chat_id
@@ -44,7 +45,6 @@ def mandar_mensaje_al_bot(request):
     
 
 def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
-    print("Entro a esta funcion del tiempo")
     tiempo_actual = datetime.datetime.now(timezone.utc)
     diferencia = tiempo_actual - tiempo_almacenado
     return diferencia.seconds    
