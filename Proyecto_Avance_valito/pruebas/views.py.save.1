@@ -1,0 +1,139 @@
+from django.http import HttpResponse, JsonResponse
+from django.template import Template, Context
+from django.shortcuts import render, redirect
+from django.conf import settings
+from modelo import models
+from datetime import timezone
+import pruebas.settings as conf
+import datetime
+import subprocess
+import requests
+import string
+import random
+
+
+def verificar_scripts(request):
+  t = 'SubirEjercicios.html'
+  Entrada = request.POST.get('Entrada','')
+  Salida_esperada =  request.POST.get('Salida_esperada','')
+  Comando = ['/home/omarconde/hola.sh',Entrada]
+  salida = subprocess.Popen(Comando,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  stdout, stderr = salida.communicate()
+  print(stdout, stderr)
+  if Salida_esperada == stdout.decode('utf-8').strip():
+     print("Ejercicio Correcto")
+  else:
+     print("Ejercicio Incorrecto")
+  return render(request,t)
+
+
+def mandar_mensaje_al_bot(request):
+    nombre = request.session.get('nombre','anonimo')
+    datos_guardados = models.Alumnos.objects.get(NombreAlumno=nombre)
+    Chat_id = datos_guardados.Chat_id
+    token = datos_guardados.Token_tel
+    mensaje_bot = ''.join(random.sample(string.ascii_letters + string.digits, 8))
+    send_text = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + Chat_id + '&parse_mode=Markdown&text='+ mensaje_bot
+    response = requests.get(send_text)
+    models.Alumnos()
+    models.Alumnos.objects.filter(NombreAlumno=nombre).update(Token_env=mensaje, Token_tem=datetime.datetime.now())
+    
+
+
+
+def verificar_token(request):
+    template = ''    
+
+
+def login(request):
+    logueado = request.session.get('logueado', False)
+    if request.method == 'GET':
+       t = 'login.html'
+       return render(request,t,{'logueado': logueado})
+    elif request.method == 'POST':
+        nombre = request.POST.get('nombres','')
+        contraseña =  request.POST.get('password','')
+        if puede_hacer_peticion(get_client_ip(request)): 
+            try:
+                  usurio = models.Alumnos.objects.get(NombreAlumno=nombre,Contraseña=contraseña)
+                  request.session['logueado']= True
+                  request.session['nombre'] = nombre
+                  mandar_mensaje_al_bot(request)
+                  return redirect('/verificar_token')
+            except:
+                  return redirect('/login')
+        else:
+             return HttpResponse("Agotaste todos los intentos prueba intente en un minuto") 
+             
+  
+
+
+def Registro_Alumnos(request):
+    t = 'Registro_Alumnos.html';
+    if request.method == 'GET':
+       return render(request,t,{})
+    elif request.method == 'POST':
+       nombre = request.POST.get('nombreAlumno','').strip()
+       nick =  request.POST.get('nick','').strip()
+       matricula = request.POST.get('Matricula','').strip()
+       contrasena =  request.POST.get('Contrasena','').strip()
+       Tipocuenta = request.POST.get('TipoCuenta','').strip()
+       chat_id = request.POST.get('Chat_id','').strip()
+       token_telegram = request.POST.get('token_tel','').strip()
+       alumno =  models.Alumnos(NombreAlumno=nombre,Matricula=matricula,Contraseña=contrasena,Tipocuenta=Tipocuenta,Chat_id=chat_id,Token_tel=token_telegram)
+       alumno.save()
+       return redirect('/login')
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+def es_ip_conocida(ip: str):
+    registros = models.Usuario.objects.filter(ip=ip)
+    return len(registros) != 0
+
+
+def guardar_peticion(ip: str, intentos: int):
+    fecha_actual = datetime.datetime.now()
+    if not es_ip_conocida(ip):
+        entrada = models.Usuario(ip=ip, intentos=1,timestamp=fecha_actual)
+        entrada.save()
+        return
+    registro = models.Usuario.objects.get(ip=ip)
+    registro.intentos = intentos
+    registro.timestamp = fecha_actual
+    registro.save()
+   
+def esta_tiempo_en_ventana(timestamp):
+    momento_actual = datetime.datetime.now(timezone.utc)
+    resta = momento_actual - timestamp
+    if resta.seconds < conf.VENTANA_SEGUNDOS_INTENTOS_PETICION:
+        return True
+    return False
+
+def puede_hacer_peticion(ip):
+    """
+    Verdadero si la IP no ha alcanzado el límite de intentos.
+
+    Keyword Arguments:
+    ip --
+    returns: Bool
+    """
+    if not es_ip_conocida(ip):
+        guardar_peticion(ip, 1)
+        return True
+    registro = models.Usuario.objects.get(ip=ip)
+    if not esta_tiempo_en_ventana(registro.timestamp):
+        guardar_peticion(ip, 1)
+        return True
+    else:
+        if (registro.intentos + 1) > conf.INTENTOS_MAXIMOS_PETICION:
+            guardar_peticion(ip, registro.intentos + 1)
+            return False
+        else:
+            guardar_peticion(ip, registro.intentos + 1)
+            return True
