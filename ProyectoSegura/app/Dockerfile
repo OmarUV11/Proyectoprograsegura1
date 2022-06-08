@@ -13,6 +13,9 @@ ENV DATABASE_PASSWORD=""
 ENV DATABASE_HOST=""
 ENV DATABASE_PORT=3306
 
+CMD docker rmi $(docker images -f "dangling=true" | grep "<none>.*<none>" | awk '{ print $3; }')
+
+
 ADD run.sh /code
 RUN chmod +x run.sh
 
@@ -28,3 +31,4 @@ RUN chown -R dueño /app
 USER dueño
 
 CMD /bin/bash -c '/code/run.sh'
+
