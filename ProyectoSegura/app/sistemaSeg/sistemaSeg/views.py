@@ -15,13 +15,12 @@ import string
 import random
 import re
 import hashlib
-<<<<<<< HEAD
 import socket
 import threading
 import sys
 
-import mensajes
-=======
+from sistemaSeg.mensajes import *
+
 #__
 #socket
 import socket
@@ -56,32 +55,40 @@ def enviar_mensaje_loop(cliente):
         mensajes.mandar_mensaje(cliente, mensaje)     
 
       
-if __name__ == '__main__':
-    host = '0.0.0.0'
-    puerto = 8002
-    cliente = conectar_servidor(host, puerto)
-    hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
-    hilo.start()
-    enviar_mensaje_loop(cliente)
-#____Aqui termina lo del socket
->>>>>>> 7cbeb95148eb72086a3f01c4d0b2885a6adbe8f1
 
 
 @login_requerido
 def verificar_scripts(request):
 
   t = 'SubirEjercicios.html'
+  host = '0.0.0.0'
+  puerto = 8002
+ 
+
+
   Entrada = request.POST.get('Entrada','')
   Salida_esperada =  request.POST.get('Salida_esperada','')
   Comando = ['/home/omarconde/hola.sh',Entrada]
   salida = subprocess.Popen(Comando,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   stdout, stderr = salida.communicate()
+  cliente = conectar_servidor(host, puerto)
+  hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
+  hilo.start()
+
   print(stdout, stderr)
+  
+
   if Salida_esperada == stdout.decode('utf-8').strip():
      print("Ejercicio Correcto")
+     enviar_mensaje_loop(cliente)
   else:
      print("Ejercicio Incorrecto")
+     enviar_mensaje_loop(cliente)
   return render(request,t)
+
+
+  
+
 
 
 def mandar_mensaje_al_bot(request):
@@ -296,26 +303,4 @@ def puede_hacer_peticion(ip):
 
 
 
-def conectar_servidor(host, puerto):
-    # socket para IP v4
-    cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        cliente.connect((host, int(puerto)))
-        return cliente
-    except:
-        print('Servidor inalcanzable')
-        exit()
-
-def leer_mensajes(cliente):
-    while True:
-        mensaje = mensajes.leer_mensaje(cliente)
-        print('-->' + mensaje.decode('utf-8'))
-
-
-def enviar_mensaje_loop(cliente):
-    mensaje = b''
-    while mensaje.strip() != b'exit':
-        mensaje = input('Mensaje: ')
-        mensaje = mensaje.encode('utf-8')
-        mensajes.mandar_mensaje(cliente, mensaje)     
 

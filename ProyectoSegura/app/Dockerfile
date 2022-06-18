@@ -20,11 +20,6 @@ ADD run.sh /code
 RUN chmod +x run.sh
 
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7cbeb95148eb72086a3f01c4d0b2885a6adbe8f1
 RUN mkdir /evaluacion
 ADD servidor.py /evaluacion 
 ADD mensajes.py /evaluacion
@@ -51,7 +46,7 @@ RUN chown -R usuario1 /app
 
 RUN chown -R usuario2 /evaluacion
 RUN chmod -R 766 /evaluacion
-<<<<<<< HEAD
+
 RUN usermod -a -G 0 usuario2
 RUN mktemp -d -t EvalScript-XXXXX || RUN chown -R usuario2 /EvalScript-XXXXX
 
@@ -59,12 +54,10 @@ RUN mktemp -d -t EvalScript-XXXXX || RUN chown -R usuario2 /EvalScript-XXXXX
 
 
 CMD python3 '/evaluacion/servidor.py'
-=======
+
 RUN mktemp -d /evaluacion/EvalScript-XXXXX 
 RUN chown -R usuario2 /evaluacion 
 #|| RUN chgrp -R 1001 /tmp/EvalScript-XXXXX
->>>>>>> 7cbeb95148eb72086a3f01c4d0b2885a6adbe8f1
-
 CMD python3 '/evaluacion/servidor.py'
 
 
