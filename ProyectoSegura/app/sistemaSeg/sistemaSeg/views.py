@@ -54,13 +54,13 @@ def verificar_scripts(request):
 
   t = 'SubirEjercicios.html'
   host = '0.0.0.0'
-  puerto = 8001
+  puerto = 8002
 
   Entrada = request.POST.get('Entrada','')
   Salida_esperada =  request.POST.get('Salida_esperada','')
   Comando = ['/home/omarconde/hola.sh',Entrada]
   cliente = conectar_servidor(host, puerto)
-  print("Paso la linea de la conexion a el servidor")
+  print("Paso la linea de la conexion a el servidor",cliente)
   salida = subprocess.Popen(Comando,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   stdout, stderr = salida.communicate()
   print(stdout, stderr)
