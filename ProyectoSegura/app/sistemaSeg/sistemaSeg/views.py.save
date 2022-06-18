@@ -15,8 +15,15 @@ import string
 import random
 import re
 import hashlib
+import socket
+import threading
+import sys
+
+import mensajes
 
 
+
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',level=logging.INFO, filename='bitacoras.log', filemode='a')
 
 @login_requerido
 def verificar_scripts(request):
@@ -47,10 +54,6 @@ def mandar_mensaje_al_bot(request):
     models.Alumnos()
     models.Alumnos.objects.filter(NombreAlumno=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now(), Estado_token="Valido")
     
-
-
-def socket_comunicacion():
-
 
 def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
     tiempo_actual = datetime.datetime.now(timezone.utc)

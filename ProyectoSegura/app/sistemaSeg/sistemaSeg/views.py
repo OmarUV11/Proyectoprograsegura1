@@ -19,17 +19,8 @@ import socket
 import threading
 import sys
 
-from sistemaSeg.mensajes import *
-
-#__
-#socket
-import socket
-import threading
-import sys
-#____
 import mensajes
 
-#____Cliente Socket
 
 def conectar_servidor(host, puerto):
     # socket para IP v4
@@ -50,45 +41,34 @@ def leer_mensajes(cliente):
 def enviar_mensaje_loop(cliente):
     mensaje = b''
     while mensaje.strip() != b'exit':
-        mensaje = input('Mensaje:hola perro')
+        mensaje = input('Mensaje: ')
         mensaje = mensaje.encode('utf-8')
-        mensajes.mandar_mensaje(cliente, mensaje)     
+        mensajes.mandar_mensaje(cliente, mensaje)
 
-      
 
+
+#logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',level=logging.INFO, filename='bitacoras.log', filemode='a')
 
 @login_requerido
 def verificar_scripts(request):
 
   t = 'SubirEjercicios.html'
   host = '0.0.0.0'
-  puerto = 8002
- 
-
+  puerto = 8001
 
   Entrada = request.POST.get('Entrada','')
   Salida_esperada =  request.POST.get('Salida_esperada','')
   Comando = ['/home/omarconde/hola.sh',Entrada]
+  cliente = conectar_servidor(host, puerto)
+  print("Paso la linea de la conexion a el servidor")
   salida = subprocess.Popen(Comando,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   stdout, stderr = salida.communicate()
-  cliente = conectar_servidor(host, puerto)
-  hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
-  hilo.start()
-
   print(stdout, stderr)
-  
-
   if Salida_esperada == stdout.decode('utf-8').strip():
      print("Ejercicio Correcto")
-     enviar_mensaje_loop(cliente)
   else:
      print("Ejercicio Incorrecto")
-     enviar_mensaje_loop(cliente)
   return render(request,t)
-
-
-  
-
 
 
 def mandar_mensaje_al_bot(request):
@@ -300,7 +280,5 @@ def puede_hacer_peticion(ip):
         else:
             guardar_peticion(ip, registro.intentos + 1)
             return True
-
-
 
 

@@ -14,13 +14,7 @@ services:
       -  ./app/sistemaSeg:/app
     depends_on:
       - bd
-    deploy:
-      resources:
-        limits:
-          cpus: "3"
-          memory: "1024M"    
-
-
+    
   bd:
     image: mariadb
     restart: always
@@ -30,12 +24,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - ./data:/var/lib/mysql
-    deploy:
-      resources:
-        limits:
-          cpus: "3"
-          memory: "1024M"
-
+    
 
   nginx:
     image: nginx
@@ -50,9 +39,4 @@ services:
     ports:
       - 80:80
       - 443:443
-    deploy:
-      resources:
-        limits:
-          cpus: "3"
-          memory: "1024M"
     
