@@ -21,7 +21,6 @@ RUN chmod +x run.sh
 
 
 
-RUN mktemp -d -t EvalScript-XXXXX
 
 RUN mkdir /evaluacion
 ADD servidor.py /evaluacion 
@@ -29,9 +28,8 @@ ADD mensajes.py /evaluacion
 
 
 
-
+#RUN mktemp -d -t EvalScript-XXXXX
 RUN mkdir /app
-
 WORKDIR /app
 
 RUN useradd usuario1 -s /bin/bash
@@ -45,6 +43,12 @@ RUN chown -R usuario1 /app
 
 RUN chown -R usuario2 /evaluacion
 RUN chmod -R 766 /evaluacion
+RUN usermod -a -G 0 usuario2
+RUN mktemp -d -t EvalScript-XXXXX || RUN chown -R usuario2 /EvalScript-XXXXX
+
+
+
+
 CMD python3 '/evaluacion/servidor.py'
 
 
