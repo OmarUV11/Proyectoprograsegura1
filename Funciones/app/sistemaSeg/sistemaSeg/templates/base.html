@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="es-MX">
+
+  <head>
+    <title>{% block titulo %}{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+    {% block estilos %}
+         <link rel="stylesheet" href="static/css/estilo_login.css">
+         <link rel="stylesheet" href="static/css/Estilo_trabajo.css">
+         <link rel="stylesheet" href="static/css/estilo_registro.css">
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <header class="container-fluid text-center bg-primary pt-5 pb-3 mt-3 mb-3 rounded text-white">
+      <h1>{% block encabezado %}{% endblock %}</h1>
+    </header>
+
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <div class="container-fluid">
+           <a class="navbar-brand" href="logout">Cerrar Session</a>
+      </div>
+    </nav>
+
+
+    <section class="container">
+      {% block contenido %}{% endblock %}
+    </section>
+    <div class="fila">
+         {% block galeria %}{% endblock %}
+      </div>
+
+      </div>
+
+
+    
+
+  </body>
+
+</html>
