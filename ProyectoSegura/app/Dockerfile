@@ -19,16 +19,37 @@ CMD docker rmi $(docker images -f "dangling=true" | grep "<none>.*<none>" | awk 
 ADD run.sh /code
 RUN chmod +x run.sh
 
+
+
+RUN mktemp -d -t EvalScript-XXXXX
+
+RUN mkdir /evaluacion
+ADD servidor.py /evaluacion 
+ADD mensajes.py /evaluacion
+
+
+
+
 RUN mkdir /app
+
 WORKDIR /app
 
-RUN useradd dueño -s /bin/bash
+RUN useradd usuario1 -s /bin/bash
+RUN useradd usuario2 -s /bin/bash
 
-RUN chown -R dueño /code
+
+
+RUN chown -R usuario1 /code
 RUN chmod -R 500 /code
-RUN chown -R dueño /app
+RUN chown -R usuario1 /app
 
-USER dueño
+RUN chown -R usuario2 /evaluacion
+RUN chmod -R 766 /evaluacion
+CMD python3 '/evaluacion/servidor.py'
+
+
+
+#USER dueño
 
 CMD /bin/bash -c '/code/run.sh'
 
