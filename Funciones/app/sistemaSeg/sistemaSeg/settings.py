@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 CSRF_TRUSTED_ORIGINS =[
-    'https://a5bc-201-105-111-211.ngrok.io'
+    'https://c5fd-201-105-140-94.ngrok.io'
 ]
 
 ALLOWED_HOSTS = ['*']

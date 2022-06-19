@@ -16,7 +16,28 @@ ENV DATABASE_PORT=3306
 ADD run.sh /code
 RUN chmod +x run.sh
 
+
+RUN mkdir /evaluacion
+ADD servidor.py /evaluacion
+ADD mensajes.py /evaluacion
+
+
 RUN mkdir /app
 WORKDIR /app
+
+RUN useradd usuario1 -s /bin/bash
+RUN useradd usuario2 -s /bin/bash
+
+
+RUN chown -R usuario1 /code
+RUN chmod -R 500 /code
+RUN chown -R usuario1 /app
+
+RUN chown -R usuario2 /evaluacion
+RUN chmod -R 766 /evaluacion
+
+RUN mktemp -d /evaluacion/EvalScript-XXXXX
+RUN chown -R usuario2 /evaluacion
+
 
 CMD /bin/bash -c '/code/run.sh'
