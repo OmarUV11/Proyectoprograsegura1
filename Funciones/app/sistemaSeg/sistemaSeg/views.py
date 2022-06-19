@@ -17,8 +17,9 @@ import re
 import hashlib
 import os, sys, stat
 import mensajes
+import socket
 import shutil
-
+import glob
 
 def conectar_servidor(host, puerto):
     # socket para IP v4
@@ -91,23 +92,26 @@ def verificar_scripts(request):
     ObtenerAlumno = models.Alumnos.objects.get(NombreAlumno=NombreUsuario)
 
     archivo = models.ArchivosA(upload=file, usuario=ObtenerAlumno)
-    hola = os.chmod(archivo, stat.S_IXUSR)
-
-    hola.save()
-
+    archivo.save()
 
     obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=ObtenerAlumno)
 
     ruta = obj.upload.path
-    os.chmod(ruta, stat.S_IXUSR)
-    shutil.copy(ruta, '/evaluacion/')
+
+    lista = r"/evaluacion/EvalScript-*"
+    directorio = glob.glob(lista)
+    rutaD = ''.join(directorio)
+    print(rutaD)
+    ruta_archivo_tmp = shutil.copy(ruta, rutaD)
+    print(ruta_archivo_tmp)
+
     rutaM = practica.Archivo.path
 
-    alumnoA = comparar_script(entrada, esperada, ruta)
+    alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
     maestroA = comparar_script(entrada, esperada, rutaM)
 
     cliente = conectar_servidor(host, puerto)
-    print("Paso la linea de la conexion a el servidor",cliente)
+    print("Paso la linea de la conexion a el servidor", cliente)
 
     if alumnoA == maestroA:
         print("Los resultados son iguales")
