@@ -24,9 +24,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-CSRF_TRUSTED_ORIGINS =[
-    'https://c5fd-201-105-140-94.ngrok.io'
-]
+#CSRF_TRUSTED_ORIGINS =[
+#    'https://c5fd-201-105-140-94.ngrok.io'
+#]
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,7 +47,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -139,5 +139,5 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
 
-MEDIA_ROOT = '/app/archivos/'
+MEDIA_ROOT = '/evaluacion/archivos/'
 MEDIA_URL = '/archivos/'

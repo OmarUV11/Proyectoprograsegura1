@@ -91,9 +91,7 @@ def verificar_scripts(request):
     ObtenerAlumno = models.Alumnos.objects.get(NombreAlumno=NombreUsuario)
 
     archivo = models.ArchivosA(upload=file, usuario=ObtenerAlumno)
-    hola = os.chmod(archivo, stat.S_IXUSR)
-
-    hola.save()
+    archivo.save()
 
 
     obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=ObtenerAlumno)

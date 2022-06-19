@@ -30,8 +30,11 @@ RUN useradd usuario2 -s /bin/bash
 
 
 RUN chown -R usuario1 /code
-RUN chmod -R 500 /code
+RUN chmod -R 777 /code
 RUN chown -R usuario1 /app
+RUN chmod -R 777 /app
+
+
 
 RUN chown -R usuario2 /evaluacion
 RUN chmod -R 766 /evaluacion
