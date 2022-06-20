@@ -22,6 +22,7 @@ RUN chmod +x run.sh
 RUN mkdir /evaluacion
 ADD servidor.py /evaluacion
 ADD mensajes.py /evaluacion
+ADD cliente.py /evaluacion
 
 
 RUN mkdir /app

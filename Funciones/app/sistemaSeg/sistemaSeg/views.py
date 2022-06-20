@@ -20,12 +20,16 @@ import mensajes
 import socket
 import shutil
 import glob
+#import threading
+
+
 
 def conectar_servidor(host, puerto):
     # socket para IP v4
     cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         cliente.connect((host, int(puerto)))
+        print("Entro a funcion para hacer la conexion")
         return cliente
     except:
         print('Servidor inalcanzable')
@@ -37,10 +41,10 @@ def leer_mensajes(cliente):
         print('-->' + mensaje.decode('utf-8'))
 
 
-def enviar_mensaje_loop(cliente):
-    mensaje = b''
-    while mensaje.strip() != b'exit':
-        mensaje = input('Mensaje: ')
+def enviar_mensaje_loop(cliente,ruta):
+   #  mensaje = b''
+   #  while mensaje.strip() != b'exit':
+        mensaje = ruta
         mensaje = mensaje.encode('utf-8')
         mensajes.mandar_mensaje(cliente, mensaje)
 
@@ -106,12 +110,15 @@ def verificar_scripts(request):
     print(ruta_archivo_tmp)
 
     rutaM = practica.Archivo.path
-
     alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
     maestroA = comparar_script(entrada, esperada, rutaM)
 
     cliente = conectar_servidor(host, puerto)
-    print("Paso la linea de la conexion a el servidor", cliente)
+    #hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
+    #hilo.start()
+    enviar_mensaje_loop(cliente,ruta_archivo_tmp)
+
+    #print("Paso la linea de la conexion a el servidor", cliente)
 
     if alumnoA == maestroA:
         print("Los resultados son iguales")
