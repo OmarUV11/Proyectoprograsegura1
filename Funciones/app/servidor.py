@@ -14,7 +14,6 @@ import sys
 
 import mensajes
 
-
 def crear_socket_servidor(puerto):
     servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     servidor.bind(('', int(puerto)))  # hace el bind en cualquier interfaz disponible
@@ -25,13 +24,15 @@ def broadcast(mensaje, clientes):
     for cliente in clientes:
         mensajes.mandar_mensaje(cliente, mensaje)
 
-
+        
+# Hilo para leer mensajes de clientes
 def atencion(cliente, clientes):
     while True:
         mensaje = mensajes.leer_mensaje(cliente)
-        if mensaje.strip() == b'exit':
-            cliente.close()
-            return
+        print("Mensajes que entraron al servidor",mensaje)
+        if mensaje.strip() != b'exit':
+           cliente.close()
+           return
         broadcast(mensaje, clientes)
     
 
@@ -43,6 +44,7 @@ def escuchar(servidor):
         clientes.append(cliente)
         hiloAtencion = threading.Thread(target=atencion, args=(cliente, clientes)) # se crea un hilo de atención por cliente
         hiloAtencion.start()
+
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ import mensajes
 import socket
 import shutil
 import glob
-#import threading
+import threading
 
 
 
@@ -42,8 +42,8 @@ def leer_mensajes(cliente):
 
 
 def enviar_mensaje_loop(cliente,ruta):
-   #  mensaje = b''
-   #  while mensaje.strip() != b'exit':
+     #mensaje = b''
+     #while mensaje.strip() != b'exit':
         mensaje = ruta
         mensaje = mensaje.encode('utf-8')
         mensajes.mandar_mensaje(cliente, mensaje)
@@ -114,9 +114,10 @@ def verificar_scripts(request):
     maestroA = comparar_script(entrada, esperada, rutaM)
 
     cliente = conectar_servidor(host, puerto)
-    #hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
-    #hilo.start()
+    hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
+    hilo.start()
     enviar_mensaje_loop(cliente,ruta_archivo_tmp)
+
 
     #print("Paso la linea de la conexion a el servidor", cliente)
 
