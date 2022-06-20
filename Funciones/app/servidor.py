@@ -29,7 +29,10 @@ def broadcast(mensaje, clientes):
 def atencion(cliente, clientes):
     while True:
         mensaje = mensajes.leer_mensaje(cliente)
-        print("Mensajes que entraron al servidor",mensaje)
+        msj = mensaje.decode('utf-8').strip()
+        print(msj)
+        lista = msj.split('|')
+        print(lista)
         if mensaje.strip() != b'exit':
            cliente.close()
            return
