@@ -5,7 +5,7 @@ from django.conf import settings
 from modelo import models
 from django.utils.crypto import get_random_string
 from datetime import timezone
-from sistemaSeg.decoradores import login_requerido_prueba, login_requerido , login_requerido2
+from sistemaSeg.decoradores import login_requerido_alumnos, login_requerido_profesor, login_requerido , login_requerido2
 import logging, platform
 import sistemaSeg.settings as conf
 import datetime
@@ -78,7 +78,7 @@ def comparar_resultados(res_maestro, res_alumno, request):
 
 
 
-@login_requerido
+@login_requerido_profesor
 def crear_actividad(request):
     t = 'crear_ejercicio.html'
     if request.method == 'GET':
@@ -104,7 +104,7 @@ def crear_actividad(request):
 #       return False
        
 
-@login_requerido_prueba
+@login_requerido_alumnos
 def verificar_scripts(request):
   t = 'SubirEjercicios.html'
   host = '0.0.0.0'
@@ -179,7 +179,7 @@ def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
     diferencia = tiempo_actual - tiempo_almacenado
     return diferencia.seconds    
 
-#@login_requerido
+@login_requerido
 def verificar_token(request):
     t = 'Verficiacion_token.html'
     nombre = request.session.get('nombre','anonimo')
@@ -198,11 +198,16 @@ def verificar_token(request):
                request.session['nombre'] = nombre
                logging.info("usuario logueado:" + nombre)
                models.Alumnos.objects.filter(NombreAlumno=nombre).update(Estado_token="Invalido")
+               alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
                if token_almacenado.Estado_token == "Invalido":
                   errores =['Token ya utilizado']
                   return render(request,t,{'errores': errores})
-               else:
+               elif alumno.Tipocuenta == 'Alumno':
                   return redirect('/verificar_scripts')
+               elif alumno.Tipocuenta == 'Maestro':
+                  return redirect('/crear_actividad')
+               
+                      
            except:
                errores = ['token incorrecto']
                return render(request, "login.html", {'errores': errores})
