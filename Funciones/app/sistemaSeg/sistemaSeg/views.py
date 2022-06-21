@@ -5,7 +5,7 @@ from django.conf import settings
 from modelo import models
 from django.utils.crypto import get_random_string
 from datetime import timezone
-from sistemaSeg.decoradores import login_requerido , login_requerido2
+from sistemaSeg.decoradores import login_requerido_prueba, login_requerido , login_requerido2
 import logging, platform
 import sistemaSeg.settings as conf
 import datetime
@@ -75,7 +75,8 @@ def comparar_resultados(res_maestro, res_alumno, request):
          messages.success(request, "Los resultados son iguales")
     else:
         messages.success(request, "Los resultados NO son iguales")
-        
+
+
 
 @login_requerido
 def crear_actividad(request):
@@ -95,7 +96,15 @@ def crear_actividad(request):
 
         return render(request, t)
 
-@login_requerido
+#def verificar_alumno(nombre):
+#    alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+#    prueba = alumno.Tipocuenta
+#    Alumno = "Alumno"
+#    if prueba != Alumno:
+#       return False
+       
+
+@login_requerido_prueba
 def verificar_scripts(request):
   t = 'SubirEjercicios.html'
   host = '0.0.0.0'
@@ -103,14 +112,18 @@ def verificar_scripts(request):
   if request.method == 'GET':
        return render(request,t)
   elif request.method == 'POST':
-
+    nombre_usuario = request.session.get('nombre')
+#    resultado = verificar_alumno(nombre_usuario)
+    if resultado == False:
+       return redirect('/login')
+       
     practica = models.Practicas.objects.get(pk=10)
 
     entrada = practica.Entrada
     esperada = practica.Esperada
     file = request.FILES.get('archivosubido')
 
-    nombre_usuario = request.session.get('nombre')
+
     obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
 
     archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
