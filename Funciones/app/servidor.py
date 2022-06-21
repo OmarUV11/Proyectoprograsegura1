@@ -11,8 +11,21 @@ Servidor de un chat. Es una implementación incompleta:
 import socket
 import threading
 import sys
-
+import os, stat
 import mensajes
+import subprocess
+import shutil
+
+def comparar_script(entradaScript, esperadaScript, archivo):
+    #os.chmod(archivo, 0o755)
+    comando = [archivo, entradaScript]
+    salida = subprocess.Popen(comando, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = salida.communicate()
+
+    if esperadaScript == stdout.decode('utf-8').strip():
+        return True
+    else:
+        return False
 
 def crear_socket_servidor(puerto):
     servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,11 +45,16 @@ def atencion(cliente, clientes):
         msj = mensaje.decode('utf-8').strip()
         print(msj)
         lista = msj.split('|')
-        print(lista)
+        print(lista[0])
+        print(lista[1])
+        print(lista[2])
+        #shutil.chown(lista[0], user='root',group='root')
         if mensaje.strip() != b'exit':
+           resultado = comparar_script(lista[1], lista[2], lista[0])
+           print(resultado)
            cliente.close()
            return
-        broadcast(mensaje, clientes)
+        broadcast(resultado, clientes)
     
 
 def escuchar(servidor):

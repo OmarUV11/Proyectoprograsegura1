@@ -48,8 +48,16 @@ def enviar_mensaje_loop(cliente,ruta,esperada,salida):
         mensaje = mensaje.encode('utf-8')
         mensajes.mandar_mensaje(cliente, mensaje)
 
+def copiar_ruta_tmp(ruta):
+    lista = r"/evaluacion/EvalScript-*"
+    directorio = glob.glob(lista)
+    ruta_directorio = ''.join(directorio)
+    ruta_copia = shutil.copy(ruta, ruta_directorio)
+    os.chmod(ruta_copia, 0o755)
+    return ruta_copia
+
 def comparar_script(entradaScript, esperadaScript, archivo):
-    os.chmod(archivo, stat.S_IXUSR)
+    os.chmod(archivo, 0o755)
     comando = [archivo, entradaScript]
     salida = subprocess.Popen(comando, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = salida.communicate()
@@ -101,17 +109,12 @@ def verificar_scripts(request):
     obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=ObtenerAlumno)
 
     ruta = obj.upload.path
-
-    lista = r"/evaluacion/EvalScript-*"
-    directorio = glob.glob(lista)
-    rutaD = ''.join(directorio)
-    print(rutaD)
-    ruta_archivo_tmp = shutil.copy(ruta, rutaD)
-    print(ruta_archivo_tmp)
-
     rutaM = practica.Archivo.path
-    alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
-    maestroA = comparar_script(entrada, esperada, rutaM)
+
+    ruta_archivo_tmp = copiar_ruta_tmp(ruta)
+
+    #alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
+    #maestroA = comparar_script(entrada, esperada, rutaM)
 
     cliente = conectar_servidor(host, puerto)
     hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
@@ -121,10 +124,10 @@ def verificar_scripts(request):
 
     #print("Paso la linea de la conexion a el servidor", cliente)
 
-    if alumnoA == maestroA:
-        print("Los resultados son iguales")
-    else:
-        print("No son iguLes")
+    #if alumnoA == maestroA:
+    #    print("Los resultados son iguales")
+    #else:
+    #    print("No son iguLes")
 
 
     return render(request,t)
