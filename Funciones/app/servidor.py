@@ -21,11 +21,12 @@ def comparar_script(entradaScript, esperadaScript, archivo):
     comando = [archivo, entradaScript]
     salida = subprocess.Popen(comando, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = salida.communicate()
-
+    correcto='correcto'
+    incorrecto='incorrecto'
     if esperadaScript == stdout.decode('utf-8').strip():
-        return True
+       return correcto
     else:
-        return False
+        return incorrecto
 
 def crear_socket_servidor(puerto):
     servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,7 +41,7 @@ def broadcast(mensaje, clientes):
         
 # Hilo para leer mensajes de clientes
 def atencion(cliente, clientes):
-    while True:
+  #  while True:
         mensaje = mensajes.leer_mensaje(cliente)
         msj = mensaje.decode('utf-8').strip()
         print(msj)
@@ -52,19 +53,21 @@ def atencion(cliente, clientes):
         if mensaje.strip() != b'exit':
            resultado = comparar_script(lista[1], lista[2], lista[0])
            print(resultado)
-           cliente.close()
+           resultado2 = resultado.encode('utf-8')
+           mensajes.mandar_mensaje(cliente, resultado2)
+         #  cliente.close()
            return
-        broadcast(resultado, clientes)
+        broadcast(mensaje, clientes)
     
 
 def escuchar(servidor):
     servidor.listen(5) # peticiones de conexion simultaneas
     clientes = []
-    while True:
-        cliente, _ = servidor.accept() # bloqueante, hasta que llegue una peticion
-        clientes.append(cliente)
-        hiloAtencion = threading.Thread(target=atencion, args=(cliente, clientes)) # se crea un hilo de atención por cliente
-        hiloAtencion.start()
+ #   while True:
+    cliente, _ = servidor.accept() # bloqueante, hasta que llegue una peticion
+    clientes.append(cliente)
+    hiloAtencion = threading.Thread(target=atencion, args=(cliente, clientes)) # se crea un hilo de atención por cliente
+    hiloAtencion.start()
 
 
 

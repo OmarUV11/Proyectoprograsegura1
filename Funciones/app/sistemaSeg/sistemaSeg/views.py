@@ -36,9 +36,10 @@ def conectar_servidor(host, puerto):
         exit()
 
 def leer_mensajes(cliente):
-    while True:
+    #while True:
         mensaje = mensajes.leer_mensaje(cliente)
         print('-->' + mensaje.decode('utf-8'))
+        #cliente.close()
 
 
 def enviar_mensaje_loop(cliente,ruta,esperada,salida):
@@ -120,7 +121,8 @@ def verificar_scripts(request):
     hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
     hilo.start()
     enviar_mensaje_loop(cliente,ruta_archivo_tmp,entrada,esperada)
-
+    cachar = leer_mensajes(cliente)
+    #print("servidor" + cachar.decode('utf-8'))
 
     #print("Paso la linea de la conexion a el servidor", cliente)
 
