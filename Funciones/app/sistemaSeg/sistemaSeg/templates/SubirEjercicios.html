@@ -2,7 +2,13 @@
 {%block titulo%}Verificacion de Scripts{% endblock%}
 {% block contenido%}
 
-
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>    
+{% endif %}
 
 
 <form action="/verificar_scripts" method="POST" enctype="multipart/form-data">
@@ -21,4 +27,7 @@
 
 <button type="submit" class="btn btn-primary">Registrar</button>
 <form>
+
+
+
 {% endblock %}

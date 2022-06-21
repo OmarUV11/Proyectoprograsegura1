@@ -21,6 +21,7 @@ import socket
 import shutil
 import glob
 import threading
+from django.contrib import messages
 
 
 
@@ -38,8 +39,8 @@ def conectar_servidor(host, puerto):
 def leer_mensajes(cliente):
     #while True:
         mensaje = mensajes.leer_mensaje(cliente)
-        print('-->' + mensaje.decode('utf-8'))
-        #cliente.close()
+        #print('-->' + mensaje.decode('utf-8'))
+        return mensaje.decode('utf-8')
 
 
 def enviar_mensaje_loop(cliente,ruta,esperada,salida):
@@ -67,6 +68,14 @@ def comparar_script(entradaScript, esperadaScript, archivo):
         return True
     else:
         return False
+
+def comparar_resultados(res_maestro, res_alumno, request):
+    if res_alumno == res_maestro:
+        #print("Los resultados son iguales")
+         messages.success(request, "Los resultados son iguales")
+    else:
+        messages.success(request, "Los resultados NO son iguales")
+        
 
 @login_requerido
 def crear_actividad(request):
@@ -101,37 +110,41 @@ def verificar_scripts(request):
     esperada = practica.Esperada
     file = request.FILES.get('archivosubido')
 
-    NombreUsuario = request.session.get('nombre')
-    ObtenerAlumno = models.Alumnos.objects.get(NombreAlumno=NombreUsuario)
+    nombre_usuario = request.session.get('nombre')
+    obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
 
-    archivo = models.ArchivosA(upload=file, usuario=ObtenerAlumno)
+    archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
     archivo.save()
 
-    obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=ObtenerAlumno)
+    obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=obtener_alumno)
 
     ruta = obj.upload.path
     rutaM = practica.Archivo.path
 
     ruta_archivo_tmp = copiar_ruta_tmp(ruta)
+    ruta_archivo_tmp_maestro = copiar_ruta_tmp(rutaM)
 
     #alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
     #maestroA = comparar_script(entrada, esperada, rutaM)
 
     cliente = conectar_servidor(host, puerto)
-    hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
-    hilo.start()
+    #hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
+    #hilo.start()
     enviar_mensaje_loop(cliente,ruta_archivo_tmp,entrada,esperada)
-    cachar = leer_mensajes(cliente)
+    msj = leer_mensajes(cliente)
+
+    cliente2 = conectar_servidor(host, puerto)
+    enviar_mensaje_loop(cliente2,ruta_archivo_tmp_maestro,entrada,esperada)
+    msj2 = leer_mensajes(cliente2)   
     #print("servidor" + cachar.decode('utf-8'))
 
-    #print("Paso la linea de la conexion a el servidor", cliente)
+    comparar_resultados(msj,msj2,request)
 
-    #if alumnoA == maestroA:
+    #print("Paso la linea de la conexion a el servidor", cliente)
+    #if msj == msj2:
     #    print("Los resultados son iguales")
     #else:
     #    print("No son iguLes")
-
-
     return render(request,t)
 
 

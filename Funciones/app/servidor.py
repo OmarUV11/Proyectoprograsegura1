@@ -16,6 +16,11 @@ import mensajes
 import subprocess
 import shutil
 
+def enviar_mensaje_loop(cliente, resultado2):
+    mensaje = resultado2
+    mensaje = mensaje.encode('utf-8')
+    mensajes.mandar_mensaje(cliente, mensaje)  
+
 def comparar_script(entradaScript, esperadaScript, archivo):
     #os.chmod(archivo, 0o755)
     comando = [archivo, entradaScript]
@@ -53,21 +58,23 @@ def atencion(cliente, clientes):
         if mensaje.strip() != b'exit':
            resultado = comparar_script(lista[1], lista[2], lista[0])
            print(resultado)
-           resultado2 = resultado.encode('utf-8')
-           mensajes.mandar_mensaje(cliente, resultado2)
-         #  cliente.close()
+           #resultado2 = resultado.encode('utf-8')
+           enviar_mensaje_loop(cliente, resultado)
+
+           #mensajes.mandar_mensaje(cliente, resultado2)
+           cliente.close()
            return
-        broadcast(mensaje, clientes)
+        #broadcast(resultado2, clientes)
     
 
 def escuchar(servidor):
     servidor.listen(5) # peticiones de conexion simultaneas
     clientes = []
- #   while True:
-    cliente, _ = servidor.accept() # bloqueante, hasta que llegue una peticion
-    clientes.append(cliente)
-    hiloAtencion = threading.Thread(target=atencion, args=(cliente, clientes)) # se crea un hilo de atención por cliente
-    hiloAtencion.start()
+    while True:
+        cliente, _ = servidor.accept() # bloqueante, hasta que llegue una peticion
+        clientes.append(cliente)
+        hiloAtencion = threading.Thread(target=atencion, args=(cliente, clientes)) # se crea un hilo de atención por cliente
+        hiloAtencion.start()
 
 
 
