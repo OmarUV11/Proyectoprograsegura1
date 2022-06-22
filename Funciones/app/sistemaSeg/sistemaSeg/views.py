@@ -22,6 +22,7 @@ import shutil
 import glob
 import threading
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -214,18 +215,23 @@ def login(request):
         nombre = request.POST.get('nombres', '').strip()
         tipousuario = request.POST.get('Tipousuario', '').strip()
         contraseña = request.POST.get('password', '').strip()
-
+        nombre_usuario = request.session.get('nombre')
+                
         if tipousuario == 'Alumno':
            if nombre and contraseña and tipousuario:
               if puede_hacer_peticion(get_client_ip(request)):
                  try:
-                      alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
-                      if password_valido(contraseña, alumno.Contraseña, alumno.salt):
+                     try:
+                         alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+                     except ObjectDoesNotExist: 
+                            errores = ['Alumno no existe']
+                            return render(request, 'login.html', {'errores':errores})    
+                     if password_valido(contraseña, alumno.Contraseña, alumno.salt):
                          request.session['logueado']= True
                          request.session['nombre']= nombre
                          mandar_mensaje_al_bot(request)
                          return redirect('/verificar_token') 
-                      else:
+                     else:
                          errores.append('Usuario o contraseña inválidos alumno') 
                  except:
                         errores.append('Usuario o contraseña inválidos alumno')
@@ -237,22 +243,18 @@ def login(request):
         elif tipousuario == 'Maestro':
             if nombre and contraseña and tipousuario:
                 if puede_hacer_peticion(get_client_ip(request)):
-                   print(nombre)
-                   #profesor = models.Profesor.objects.get(NombreProfesor=nombre)
-                   #profesor = models.Alumno.objects.get(NombreAlumno=nombre)
-                   alumno2 = models.Profesor.objects.get(NombreProfesor=nombre)
-                   print(alumno2.NombreProfesor)
-                   print('hola-aqui debo de aparecer')
                    try:
-                       # return redirect('/verificar_token')
-                       # print(profesor.NombreProfesor)
-                        print('arriba de mi debe de estar el nombre')
-                        if password_valido(contraseña, alumno2.Contraseña, alumno2.salt):
+                       try:
+                           profesor = models.Profesor.objects.get(NombreProfesor=nombre)
+                       except ObjectDoesNotExist: 
+                              errores = ['Profesor no existe']
+                              return render(request, 'login.html', {'errores':errores})   
+                       if password_valido(contraseña, profesor.Contraseña, profesor.salt):
                            request.session['logueado']= True
                            request.session['nombre']= nombre
                            mandar_mensaje_al_bot(request)
                            return redirect('/verificar_token')
-                        else:
+                       else:
                             errores.append('Usuario o contraseña inválidos profesor else')
                    except:
                           errores.append('Usuario o contraseña inválidos profesor excep')
