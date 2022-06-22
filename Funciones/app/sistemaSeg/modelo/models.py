@@ -17,6 +17,10 @@ class Profesor(models.Model):
       salt = models.CharField(max_length = 100, default="", null=True )
       Estado_token = models.CharField(max_length = 30 , null=True)
 
+class Profesor2(models.Model):
+      NombreProfesor = models.CharField(max_length = 50)
+      Matricula =  models.CharField(max_length = 20)
+
 
 class Alumnos(models.Model):
       NombreAlumno = models.CharField(max_length = 60)

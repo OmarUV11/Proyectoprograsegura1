@@ -214,6 +214,7 @@ def login(request):
         nombre = request.POST.get('nombres', '').strip()
         tipousuario = request.POST.get('Tipousuario', '').strip()
         contraseña = request.POST.get('password', '').strip()
+
         if tipousuario == 'Alumno':
            if nombre and contraseña and tipousuario:
               if puede_hacer_peticion(get_client_ip(request)):
@@ -225,9 +226,9 @@ def login(request):
                          mandar_mensaje_al_bot(request)
                          return redirect('/verificar_token') 
                       else:
-                         errores.append('Usuario o contraseña inválidos') 
+                         errores.append('Usuario o contraseña inválidos alumno') 
                  except:
-                        errores.append('Usuario o contraseña inválidos')
+                        errores.append('Usuario o contraseña inválidos alumno')
               else:
                     return HttpResponse("Agotaste tus intentos espera 1 minuto")
            else:
@@ -236,26 +237,33 @@ def login(request):
         elif tipousuario == 'Maestro':
             if nombre and contraseña and tipousuario:
                 if puede_hacer_peticion(get_client_ip(request)):
+                   print(nombre)
+                   #profesor = models.Profesor.objects.get(NombreProfesor=nombre)
+                   #profesor = models.Alumno.objects.get(NombreAlumno=nombre)
+                   alumno2 = models.Profesor.objects.get(NombreProfesor=nombre)
+                   print(alumno2.NombreProfesor)
+                   print('hola-aqui debo de aparecer')
                    try:
-                        profesor = models.Profesor.objects.get(NombreProfesor=nombre)
-                        if password_valido(contraseña, profesor.Contraseña, profesor.salt):
+                       # return redirect('/verificar_token')
+                       # print(profesor.NombreProfesor)
+                        print('arriba de mi debe de estar el nombre')
+                        if password_valido(contraseña, alumno2.Contraseña, alumno2.salt):
                            request.session['logueado']= True
                            request.session['nombre']= nombre
                            mandar_mensaje_al_bot(request)
                            return redirect('/verificar_token')
                         else:
-                            errores.append('Usuario o contraseña inválidos')
+                            errores.append('Usuario o contraseña inválidos profesor else')
                    except:
-                          errores.append('Usuario o contraseña inválidos')
+                          errores.append('Usuario o contraseña inválidos profesor excep')
                 else:
                       return HttpResponse("Agotaste tus intentos espera 1 minuto")
             else:
                    errores.append('No se pasaron las variables correctas en el formulario')
-            return render(request, 'login.html', {'errores': errores})         
-                             
-                    
-                
-   
+            return render(request, 'login.html', {'errores': errores})
+
+
+        
 @login_requerido2
 def logout(request):
     request.session['logueado'] = False
