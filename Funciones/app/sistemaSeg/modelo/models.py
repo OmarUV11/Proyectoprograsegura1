@@ -5,6 +5,19 @@ class Usuario(models.Model):
       nombre = models.CharField(max_length = 25)
       contraseña = models.CharField(max_length = 100)
 
+class Profesor(models.Model):
+      NombreProfesor = models.CharField(max_length = 50)
+      Matricula =  models.CharField(max_length = 20)
+      Contraseña = models.CharField(max_length = 100)
+      Tipocuenta = models.CharField(max_length = 20, null=True)
+      Chat_id = models.CharField(max_length = 40, null=True)
+      Token_tel = models.CharField(max_length = 60, null=True)
+      Token_Env = models.CharField(max_length = 60, null=True)
+      Token_Tem = models.DateTimeField(null=True)
+      salt = models.CharField(max_length = 100, default="", null=True )
+      Estado_token = models.CharField(max_length = 30 , null=True)
+
+
 class Alumnos(models.Model):
       NombreAlumno = models.CharField(max_length = 60)
       Matricula =  models.CharField(max_length = 60)
