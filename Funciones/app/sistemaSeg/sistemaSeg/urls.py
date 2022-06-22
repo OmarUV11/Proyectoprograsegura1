@@ -27,5 +27,7 @@ urlpatterns = [
     path('verificar_token',verificar_token),
     path('logout',logout),
     path('crear_actividad', crear_actividad),
+    path('verificar_token_maestro',verificar_token_maestro),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

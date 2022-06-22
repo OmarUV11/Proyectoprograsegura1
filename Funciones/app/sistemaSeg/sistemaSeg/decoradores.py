@@ -1,11 +1,15 @@
 from django.shortcuts import redirect
 from modelo import models
+from django.core.exceptions import ObjectDoesNotExist
 
 def login_requerido_alumnos(vista):
         def interna(request, *args, **kwargs):
                 logueado = request.session.get('logueado', False)
                 nombre_usuario = request.session.get('nombre')
-                alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
+                try:
+                    alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
+                except ObjectDoesNotExist: 
+                       return redirect('/login')
                 prueba = alumno.Tipocuenta
                 alumno = "Alumno"
                 if not logueado or prueba != alumno:
@@ -17,8 +21,12 @@ def login_requerido_profesor(vista):
         def interna(request, *args, **kwargs):
                 logueado = request.session.get('logueado', False)
                 nombre_usuario = request.session.get('nombre')
-                alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
-                prueba = alumno.Tipocuenta
+                try:
+                    profesor = models.Profesor.objects.get(NombreProfesor=nombre_usuario)
+                except ObjectDoesNotExist: 
+                       return redirect('/login')
+
+                prueba = profesor.Tipocuenta
                 maestro = "Maestro"
                 if not logueado or prueba != maestro:
                         return redirect('/login')

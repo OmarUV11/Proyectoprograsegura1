@@ -153,7 +153,6 @@ def verificar_scripts(request):
 
 
 def mandar_mensaje_al_bot(request):
-    
     nombre = request.session.get('nombre','anonimo')
     datos_guardados = models.Alumnos.objects.get(NombreAlumno=nombre)
     Chat_id = datos_guardados.Chat_id
@@ -163,6 +162,17 @@ def mandar_mensaje_al_bot(request):
     requests.get(send_text)
     models.Alumnos()
     models.Alumnos.objects.filter(NombreAlumno=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now(), Estado_token="Valido")
+
+def mandar_mensaje_al_bot_profesor(request):
+    nombre = request.session.get('nombre','anonimo')
+    datos_guardados = models.Profesor.objects.get(NombreProfesor=nombre)
+    Chat_id = datos_guardados.Chat_id
+    token = datos_guardados.Token_tel
+    mensaje_bot = ''.join(random.sample(string.ascii_letters + string.digits, 8))
+    send_text = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + Chat_id + '&parse_mode=Markdown&text='+ mensaje_bot
+    requests.get(send_text)
+    models.Profesor()
+    models.Profesor.objects.filter(NombreProfesor=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now(), Estado_token="Valido")
     
 
 def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
@@ -195,15 +205,52 @@ def verificar_token(request):
                   return render(request,t,{'errores': errores})
                elif alumno.Tipocuenta == 'Alumno':
                   return redirect('/verificar_scripts')
-               elif alumno.Tipocuenta == 'Maestro':
-                  return redirect('/crear_actividad')
                
-                      
+                     
            except:
                errores = ['token incorrecto']
                return render(request, "login.html", {'errores': errores})
         else:
-           return HttpResponse("Agotaste tus intentos espera 1 minuto") 
+           return HttpResponse("Agotaste tus intentos espera 1 minuto")
+
+@login_requerido            
+def verificar_token_maestro(request):
+    t = 'Verficiacion_token_maestro.html'
+    nombre = request.session.get('nombre','anonimo')
+    if request.method == 'GET':
+        return render(request, t)
+    elif request.method == 'POST':
+        ip_cliente = get_client_ip(request)
+        if puede_hacer_peticion(ip_cliente):
+           token = request.POST.get('Token','').strip()
+           try:
+               print('estoy en el try arriba de token almacenado')
+               token_almacenado = models.Profesor.objects.get(Token_Env=token)
+               print(token_almacenado.Estado_token)
+               if (disminuir_tiempo_actual_yalmaceno(token_almacenado.Token_Tem) > 160):
+                    print('estoy en el if abajo estan errores')
+                    errores={'El token ha expirado'}
+                    return render(request,t,{'errores':errores})
+               request.session['logueado2'] = True
+               request.session['nombre'] = nombre
+               logging.info("usuario logueado:" + nombre)
+               print('abajo esta model profesor')
+               models.Profesor.objects.filter(NombreProfesor=nombre).update(Estado_token="Invalido")
+               profesor = models.Profesor.objects.get(NombreProfesor=nombre)
+               print(token_almacenado.Estado_token)
+               if token_almacenado.Estado_token == "Invalido":
+                  errores =['Token ya utilizado']
+                  return render(request,t,{'errores': errores})
+               elif profesor.Tipocuenta == 'Maestro':
+                  return redirect('/crear_actividad')
+               
+        
+           except:
+               errores = ['token incorrecto']
+               return render(request, "login.html", {'errores': errores})
+        else:
+           return HttpResponse("Agotaste tus intentos espera 1 minuto")
+
 
 
 def login(request):
@@ -245,15 +292,15 @@ def login(request):
                 if puede_hacer_peticion(get_client_ip(request)):
                    try:
                        try:
-                           profesor = models.Profesor.objects.get(NombreProfesor=nombre)
+                           profesor2 = models.Profesor.objects.get(NombreProfesor=nombre)
                        except ObjectDoesNotExist: 
                               errores = ['Profesor no existe']
                               return render(request, 'login.html', {'errores':errores})   
-                       if password_valido(contraseña, profesor.Contraseña, profesor.salt):
+                       if password_valido(contraseña, profesor2.Contraseña, profesor2.salt):
                            request.session['logueado']= True
                            request.session['nombre']= nombre
-                           mandar_mensaje_al_bot(request)
-                           return redirect('/verificar_token')
+                           mandar_mensaje_al_bot_profesor(request)
+                           return redirect('/verificar_token_maestro')
                        else:
                             errores.append('Usuario o contraseña inválidos profesor else')
                    except:
