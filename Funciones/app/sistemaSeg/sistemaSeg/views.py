@@ -211,49 +211,50 @@ def login(request):
         return render(request, 'login.html', {'logueado':logueado})
   elif request.method == 'POST':
         errores = []
-        nombre = request.POST.get('nombres', '').stript()
-        tipousuario = request.POST.get('Tipousuario', '').stript()
-        contraseña = request.POST.get('password', '').stript()
-        
-        if nombre and contraseña and tipousuario:
-           if tipousuario == 'Alumno':
+        nombre = request.POST.get('nombres', '').strip()
+        tipousuario = request.POST.get('Tipousuario', '').strip()
+        contraseña = request.POST.get('password', '').strip()
+        if tipousuario == 'Alumno':
+           if nombre and contraseña and tipousuario:
               if puede_hacer_peticion(get_client_ip(request)):
                  try:
-                    profesor = models.Profesor.objects.get(NombreProfesor=nombre)
-                    if password_valido(contraseña, profesor.Contraseña, profesor.salt):
-                       request.session['logueado']= True
-                       request.session['nombre']= nombre
-                       mandar_mensaje_al_bot(request)
-                       return redirect('/verificar_token')
-                    else:
-                      errores.append('Usuario o contraseña inválidos')
+                      alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
+                      if password_valido(contraseña, alumno.Contraseña, alumno.salt):
+                         request.session['logueado']= True
+                         request.session['nombre']= nombre
+                         mandar_mensaje_al_bot(request)
+                         return redirect('/verificar_token') 
+                      else:
+                         errores.append('Usuario o contraseña inválidos') 
                  except:
-                       errores.append('Usuario o contraseña inválidos')
-                                              
+                        errores.append('Usuario o contraseña inválidos')
               else:
-                   return HttpResponse("Agotaste tus intentos espera 1 minuto")
-        else:        
-             errores.append('No se pasaron las variables correctas en el formulario')
-             return render(request, 'login.html', {'errores': errores})
-                
-           elif tipousuario == 'Maestro':
+                    return HttpResponse("Agotaste tus intentos espera 1 minuto")
+           else:
+                 errores.append('No se pasaron las variables correctas en el formulario')
+           return render(request, 'login.html', {'errores': errores})
+        elif tipousuario == 'Maestro':
+            if nombre and contraseña and tipousuario:
+                if puede_hacer_peticion(get_client_ip(request)):
                    try:
-                      profesor = models.Profesor.objects.get(NombreProfesor=nombre)
-                         if password_valido(contraseña, profesor.Contraseña, profesor.salt):
-                            request.session['logueado']= True
-                            request.session['nombre']= nombre
-                            mandar_mensaje_al_bot(request)
-                            return redirect('/verificar_token')
-                         else:
+                        profesor = models.Profesor.objects.get(NombreProfesor=nombre)
+                        if password_valido(contraseña, profesor.Contraseña, profesor.salt):
+                           request.session['logueado']= True
+                           request.session['nombre']= nombre
+                           mandar_mensaje_al_bot(request)
+                           return redirect('/verificar_token')
+                        else:
                             errores.append('Usuario o contraseña inválidos')
                    except:
-                         errores.append('Usuario o contraseña inválidos')
-              else:
-              return HttpResponse("Agotaste tus intentos espera 1 minuto")
-        else:        
-            errores.append('No se pasaron las variables correctas en el formulario')
-        return render(request, 'login.html', {'errores': errores})
-
+                          errores.append('Usuario o contraseña inválidos')
+                else:
+                      return HttpResponse("Agotaste tus intentos espera 1 minuto")
+            else:
+                   errores.append('No se pasaron las variables correctas en el formulario')
+            return render(request, 'login.html', {'errores': errores})         
+                             
+                    
+                
    
 @login_requerido2
 def logout(request):
