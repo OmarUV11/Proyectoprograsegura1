@@ -21,9 +21,15 @@ import socket
 import shutil
 import glob
 import threading
+import logging, platform
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
+
+
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO,
+                    filename='/log/resgistros.log', filemode='a')
 
 
 def conectar_servidor(host, puerto):
@@ -31,10 +37,11 @@ def conectar_servidor(host, puerto):
     cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         cliente.connect((host, int(puerto)))
-        print("Entro a funcion para hacer la conexion")
+        logging.info("Se establecio la conexion al servidor de pruebas")
         return cliente
     except:
         print('Servidor inalcanzable')
+        logging.error('No se establecio la conexion con el servidor de ejecucion de scripts')
         exit()
 
 def leer_mensajes(cliente):
@@ -45,8 +52,6 @@ def leer_mensajes(cliente):
 
 
 def enviar_mensaje_loop(cliente,ruta,esperada,salida):
-     #mensaje = b''
-     #while mensaje.strip() != b'exit':
         mensaje = ruta + '|' + esperada + '|' + salida
         mensaje = mensaje.encode('utf-8')
         mensajes.mandar_mensaje(cliente, mensaje)
@@ -93,9 +98,8 @@ def crear_actividad(request):
         nombre = request.session.get('nombre')
         id_profe = models.Profesor.objects.get(NombreProfesor=nombre)
         practica = models.Practicas(NombrePractica=titulo,Descripcion=descripcion,Entrada=entrada, Esperada=esperada, Archivo=archivo, practica_profesor_id=id_profe.id)
-
         practica.save()
-
+        logging.info("Se creo la actividad correctamente" + practica)
         return render(request, t)
 
 def listar_ejercicios(request):
@@ -122,6 +126,7 @@ def verificar_scripts(request, id):
     obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
     archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
     archivo.save()
+    
 
     obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=obtener_alumno)
 
@@ -165,6 +170,7 @@ def mandar_mensaje_al_bot(request):
     send_text = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + Chat_id + '&parse_mode=Markdown&text='+ mensaje_bot
     requests.get(send_text)
     models.Alumnos()
+    logging.info("Se le envio el token para la autenticacion a el usuario:" + nombre)
     models.Alumnos.objects.filter(NombreAlumno=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now(), Estado_token="Valido")
 
 def mandar_mensaje_al_bot_profesor(request):
@@ -176,12 +182,14 @@ def mandar_mensaje_al_bot_profesor(request):
     send_text = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + Chat_id + '&parse_mode=Markdown&text='+ mensaje_bot
     requests.get(send_text)
     models.Profesor()
+    logging.info("Se le envio el token para la autenticacion a el usuario:" + nombre)
     models.Profesor.objects.filter(NombreProfesor=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now(), Estado_token="Valido")
     
 
 def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
     tiempo_actual = datetime.datetime.now(timezone.utc)
     diferencia = tiempo_actual - tiempo_almacenado
+    logging.info("Se disminuye el tiempo de vida del token")
     return diferencia.seconds    
 
 @login_requerido
@@ -198,6 +206,7 @@ def verificar_token(request):
                token_almacenado = models.Alumnos.objects.get(Token_Env=token)
                if (disminuir_tiempo_actual_yalmaceno(token_almacenado.Token_Tem) > 160):  
                     errores={'El token ha expirado'}
+                    logging.error('El token ha expierado', token_almacenado)
                     return render(request,t,{'errores':errores})
                request.session['logueado2'] = True
                request.session['nombre'] = nombre
@@ -206,6 +215,7 @@ def verificar_token(request):
                alumno = models.Alumnos.objects.get(NombreAlumno=nombre)
                if token_almacenado.Estado_token == "Invalido":
                   errores =['Token ya utilizado']
+                  logging.error('El token ya fue utilizado', token_almacenado)
                   return render(request,t,{'errores': errores})
                elif alumno.Tipocuenta == 'Alumno':
                   return redirect('/listar_ejercicios')
@@ -213,6 +223,7 @@ def verificar_token(request):
                      
            except:
                errores = ['token incorrecto']
+               logging.error('El token que se utilizo fue incorrecto', token_almacenado)
                return render(request, "login.html", {'errores': errores})
         else:
            return HttpResponse("Agotaste tus intentos espera 1 minuto")
@@ -234,6 +245,7 @@ def verificar_token_maestro(request):
                if (disminuir_tiempo_actual_yalmaceno(token_almacenado.Token_Tem) > 160):
                     print('estoy en el if abajo estan errores')
                     errores={'El token ha expirado'}
+                    logging.error('El token ha expierado', token_almacenado)
                     return render(request,t,{'errores':errores})
                request.session['logueado2'] = True
                request.session['nombre'] = nombre
@@ -244,6 +256,7 @@ def verificar_token_maestro(request):
                print(token_almacenado.Estado_token)
                if token_almacenado.Estado_token == "Invalido":
                   errores =['Token ya utilizado']
+                  logging.error('El token ya fue utilizado', token_almacenado)
                   return render(request,t,{'errores': errores})
                elif profesor.Tipocuenta == 'Maestro':
                   return redirect('/crear_actividad')
@@ -251,6 +264,7 @@ def verificar_token_maestro(request):
         
            except:
                errores = ['token incorrecto']
+               logging.error('El token que se utilizo fue incorrecto', token_almacenado)
                return render(request, "login.html", {'errores': errores})
         else:
            return HttpResponse("Agotaste tus intentos espera 1 minuto")
@@ -282,14 +296,20 @@ def login(request):
                          request.session['nombre']= nombre
                          mandar_mensaje_al_bot(request)
                          return redirect('/verificar_token') 
+                         logging.info("Se redireccino a la verificacion del tokenal usuario:" + nombre)
                      else:
-                         errores.append('Usuario o contraseña inválidos alumno') 
+                         
+                         errores.append('Usuario o contraseña inválidos alumno')
+                         logging.error('Usuario o contraseña inválidos alumno')
                  except:
                         errores.append('Usuario o contraseña inválidos alumno')
+                        logging.error('Usuario o contraseña inválidos alumno')
               else:
                     return HttpResponse("Agotaste tus intentos espera 1 minuto")
+                    logging.error('Agotaste tus intentos espera 1 minuto')
            else:
                  errores.append('No se pasaron las variables correctas en el formulario')
+                 logging.error('No se pasaron las variables correctas en el formulario')
            return render(request, 'login.html', {'errores': errores})
         elif tipousuario == 'Maestro':
             if nombre and contraseña and tipousuario:
@@ -305,14 +325,19 @@ def login(request):
                            request.session['nombre']= nombre
                            mandar_mensaje_al_bot_profesor(request)
                            return redirect('/verificar_token_maestro')
+                           logging.info("Se redireccino a la verificacion del tokenal usuario:" + nombre)
                        else:
-                            errores.append('Usuario o contraseña inválidos profesor else')
+                            errores.append('Usuario o contraseña inválidos profesor')
+                            logging.error('Usuario o contraseña inválidos profe')
                    except:
-                          errores.append('Usuario o contraseña inválidos profesor excep')
+                          errores.append('Usuario o contraseña inválidos profesor')
+                          logging.error('Usuario o contraseña inválidos profe')
                 else:
                       return HttpResponse("Agotaste tus intentos espera 1 minuto")
+                      logging.error('Agotaste tus intentos espera 1 minuto')
             else:
                    errores.append('No se pasaron las variables correctas en el formulario')
+                   logging.error('No se pasaron las variables correctas en el formulario')
             return render(request, 'login.html', {'errores': errores})
 
 
@@ -321,6 +346,7 @@ def login(request):
 def logout(request):
     request.session['logueado'] = False
     request.session.flush()
+    logging.info("El usuario cerro session")
     return redirect('/login')
  
 def password_valido(password, pass_hasheado, salt):
@@ -370,8 +396,10 @@ def Registro_Alumnos(request):
           profesor = models.Profesor(NombreProfesor=nombre, Matricula=matricula, Contraseña=hasher.hexdigest(), Tipocuenta=Tipocuenta, Chat_id=chat_id, Token_tel=token_telegram, salt=Elsalt)
           if Tipocuenta == "Alumno":
              alumno.save()
+             logging.info("Se guardo el registro de el alumno:" + nombre)
              return redirect('/login')
           else:
+             logging.info("Se guardo el registro de el alumno:" + nombre)
              profesor.save()
              return redirect('/login')
        else:

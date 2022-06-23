@@ -48,4 +48,12 @@ RUN chmod -R 777 /evaluacion
 RUN chown -R usuario2 /bd_archivos
 RUN chmod -R 777 /bd_archivos
 
+
+RUN mkdir /log 
+RUN chown -R usuario2 /log
+RUN chmod -R 777 /log
+
+
+
+
 CMD /bin/bash -c '/code/run.sh'
