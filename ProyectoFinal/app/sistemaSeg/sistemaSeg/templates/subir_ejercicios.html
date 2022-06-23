@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{%block titulo%}Verificacion de Scripts{% endblock%}
+{% block encabezado %}Verificación de Scripts{% endblock %}
+{% block contenido%}
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <div class="container-fluid">
+           <a class="navbar-brand" href="/listar_ejercicios">Lista de actividades</a>
+      </div>
+</nav>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>    
+{% endif %}
+
+
+<form action="{% url 'verificar_script' bot.id %}" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="mb-3 mt-3">
+     <label  class="form-label">{{bot.NombrePractica}}</label>
+<div class="mb-3 mt-3">
+     <label  class="form-label">Descripción:</label>
+     <label  class="form-label">{{bot.Descripcion}}</label>
+</div>
+<div class="mb-3 mt-3">
+     <label  class="form-label">Entrada:</label>
+     <label  class="form-label">{{bot.Entrada}}</label>
+</div>
+<div class="mb-3 mt-3">
+     <label  class="form-label">Salida:</label>
+     <label  class="form-label">{{bot.Esperada}}</label>
+</div>
+<div class="mb-3 mt-3">
+     <input type="file" name="archivosubido" accept=".sh">
+</div>
+
+<button type="submit" class="btn btn-primary">Registrar</button>
+<form>
+
+
+
+{% endblock %}

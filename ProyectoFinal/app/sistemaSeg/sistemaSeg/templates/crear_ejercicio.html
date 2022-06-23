@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{%block titulo%}Creación de Prácticas{% endblock%}
+{% block contenido%}
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+     <div class="container-fluid">
+          <a class="navbar-brand" href="logout">Cerrar Sesion</a>
+          <a class="navbar-brand" href="/listar_alumnos">Listar alumnos</a>
+     </div>
+</nav>
+
+<form action="/crear_actividad" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="mb-3 mt-3">
+     <label for="Titulo" class="form-label">Titulo:</label>
+     <input type="text" class="form-control" id="Titulo" placeholder="Titulo" name="Titulo">
+</div>
+<div class="mb-3 mt-3">
+     <label for="Descripcion" class="form-label">Descripción:</label>
+     <input type="text" class="form-control" id="Descripcion" placeholder="Descripcion" name="Descripcion">
+</div>
+<div class="mb-3 mt-3">
+     <label for="Entrada" class="form-label">Entrada:</label>
+     <input type="text" class="form-control" id="entrada" placeholder="Entrada" name="entrada">
+</div>
+<div class="mb-3 mt-3">
+     <label for="esperada" class="form-label">Salida esperada:</label>
+     <input type="text" class="form-control" id="esperada" placeholder="Esperada" name="esperada">
+</div>
+<div class="mb-3 mt-3">
+     <input type="file" name="archivosubido" accept=".sh">
+</div>
+
+<button type="submit" class="btn btn-primary">Crear</button>
+<form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block titulo %}Registro de Actividade{% endblock %}
+{% block encabezado %}Registro de Actividades diponibles{% endblock %}
+{% block contenido %}
+
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+     <div class="container-fluid">
+          <a class="navbar-brand" href="logout">Cerrar Sesion</a>
+          <a class="navbar-brand" href="/crear_actividad">Crear Actividades</a>
+     </div>
+</nav>
+
+
+ <article class="container">
+          <div class="table-responsive">
+            <table class="table table table-dark">
+              <thead>
+                <tr>
+                    <th>Alumnos</th>
+              
+                  </tr>
+                </thead>
+    <tbody>
+
+ {% for alumno in alumnos %}
+  <tr>
+  <th>{{ alumno.upload }}</th>
+  <th>{{ alumno.usuario }}</th>
+  <th>{{ alumno.estado }}</th>
+  </tr>
+   {% endfor %}
+              </tbody>
+                </div>
+                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+                   <div class="container-fluid">
+                   </div>
+                 </nav>
+
+{% endblock %}
