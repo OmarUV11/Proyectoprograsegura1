@@ -29,6 +29,7 @@ RUN mkdir /app
 WORKDIR /app
 
 RUN mkdir /bd_archivos
+RUN mkdir /logweb
 
 RUN mktemp -d /evaluacion/EvalScript-XXXXX
 
@@ -49,9 +50,8 @@ RUN chown -R usuario2 /bd_archivos
 RUN chmod -R 777 /bd_archivos
 
 
-RUN mkdir /log 
-RUN chown -R usuario2 /log
-RUN chmod -R 777 /log
+RUN chown -R usuario2 /logweb
+RUN chmod -R 777 /logweb
 
 
 

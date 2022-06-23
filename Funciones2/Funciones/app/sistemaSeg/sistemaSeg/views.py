@@ -27,10 +27,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
-                    datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO,
-                    filename='/log/resgistros.log', filemode='a')
-
 
 def conectar_servidor(host, puerto):
     # socket para IP v4
@@ -75,12 +71,13 @@ def comparar_script(entradaScript, esperadaScript, archivo):
     else:
         return False
 
-def comparar_resultados(res_maestro, res_alumno, request):
+def comparar_resultados(res_maestro, res_alumno):
     if res_alumno == res_maestro:
-        #print("Los resultados son iguales")
-         messages.success(request, "Los resultados son iguales")
+        correcto = 'Correcto'
+        return correcto
     else:
-        messages.success(request, "Los resultados NO son iguales")
+        incorrecto = 'Incorrecto'
+        return incorrecto
 
 
 
@@ -99,7 +96,7 @@ def crear_actividad(request):
         id_profe = models.Profesor.objects.get(NombreProfesor=nombre)
         practica = models.Practicas(NombrePractica=titulo,Descripcion=descripcion,Entrada=entrada, Esperada=esperada, Archivo=archivo, practica_profesor_id=id_profe.id)
         practica.save()
-        logging.info("Se creo la actividad correctamente" + practica)
+        logging.info("Se creo la actividad correctamente" + titulo)
         return render(request, t)
 
 def listar_ejercicios(request):
@@ -118,10 +115,12 @@ def verificar_scripts(request, id):
        return render(request,t,{'bot':bot})
   elif request.method == 'POST':
     bot = models.Practicas.objects.get(id=id)
+    
     nombre_usuario = request.session.get('nombre')
     practica = models.Practicas.objects.get(pk=id)
     entrada = practica.Entrada
     esperada = practica.Esperada
+
     file = request.FILES.get('archivosubido')
     obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
     archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
@@ -136,27 +135,20 @@ def verificar_scripts(request, id):
     ruta_archivo_tmp = copiar_ruta_tmp(ruta)
     ruta_archivo_tmp_maestro = copiar_ruta_tmp(rutaM)
 
-    #alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
-    #maestroA = comparar_script(entrada, esperada, rutaM)
 
     cliente = conectar_servidor(host, puerto)
-    #hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
-    #hilo.start()
     enviar_mensaje_loop(cliente,ruta_archivo_tmp,entrada,esperada)
     msj = leer_mensajes(cliente)
 
     cliente2 = conectar_servidor(host, puerto)
     enviar_mensaje_loop(cliente2,ruta_archivo_tmp_maestro,entrada,esperada)
     msj2 = leer_mensajes(cliente2)   
-    #print("servidor" + cachar.decode('utf-8'))
 
-    comparar_resultados(msj,msj2,request)
+    resultado = comparar_resultados(msj,msj2)
 
-    #print("Paso la linea de la conexion a el servidor", cliente)
-    #if msj == msj2:
-    #    print("Los resultados son iguales")
-    #else:
-    #    print("No son iguLes")
+    models.ArchivosA.objects.filter(upload=file,usuario_id=obtener_alumno).update(estado=resultado)
+
+
 
     return render(request,t,{'bot':bot})
 
@@ -521,3 +513,8 @@ def puede_hacer_peticion(ip):
 def logout(request):
      request.session['logueado'] = False
      return redirect('/login')
+
+
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO,
+                    filename='/logweb/resgistros.log', filemode='a')
