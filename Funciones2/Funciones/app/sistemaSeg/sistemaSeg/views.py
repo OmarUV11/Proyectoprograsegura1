@@ -98,65 +98,63 @@ def crear_actividad(request):
         return render(request, t)
 
 
-def informacion_actividad(request, id):
-   t = 'informacion_actividad.html';
-   bots =  models.Practicas.objects.get(id=id)
-   return render(request,t,{'bots':bots})
 
 
 @login_requerido_alumnos
-def verificar_scripts(request):
-  t = 'SubirEjercicios.html'
+def verificar_scripts(practica_id):
   host = '0.0.0.0'
   puerto = 8002
-  if request.method == 'GET':
-       return render(request,t)
-  elif request.method == 'POST':
-    nombre_usuario = request.session.get('nombre')
-#    resultado = verificar_alumno(nombre_usuario)
-    if resultado == False:
-       return redirect('/login')
-    id_actividad = models.Practicas.objects.all()
+  id_actividad = models.Practicas.objects.all()
     
-    practica = models.Practicas.objects.get(pk=id_actividad.pk)
+  practica = models.Practicas.objects.get(pk=id_actividad.pk)
     
-    entrada = practica.Entrada
-    esperada = practica.Esperada
-    file = request.FILES.get('archivosubido')
-    obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
-    archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
-    archivo.save()
+  entrada = practica.Entrada
+  esperada = practica.Esperada
+  file = request.FILES.get('archivosubido')
+  obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
+  archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
+  archivo.save()
 
-    obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=obtener_alumno)
+  obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=obtener_alumno)
 
-    ruta = obj.upload.path
-    rutaM = practica.Archivo.path
+  ruta = obj.upload.path
+  rutaM = practica.Archivo.path
 
-    ruta_archivo_tmp = copiar_ruta_tmp(ruta)
-    ruta_archivo_tmp_maestro = copiar_ruta_tmp(rutaM)
+  ruta_archivo_tmp = copiar_ruta_tmp(ruta)
+  ruta_archivo_tmp_maestro = copiar_ruta_tmp(rutaM)
 
     #alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
     #maestroA = comparar_script(entrada, esperada, rutaM)
 
-    cliente = conectar_servidor(host, puerto)
+  cliente = conectar_servidor(host, puerto)
     #hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
     #hilo.start()
-    enviar_mensaje_loop(cliente,ruta_archivo_tmp,entrada,esperada)
-    msj = leer_mensajes(cliente)
+  enviar_mensaje_loop(cliente,ruta_archivo_tmp,entrada,esperada)
+  msj = leer_mensajes(cliente)
 
-    cliente2 = conectar_servidor(host, puerto)
-    enviar_mensaje_loop(cliente2,ruta_archivo_tmp_maestro,entrada,esperada)
-    msj2 = leer_mensajes(cliente2)   
+  cliente2 = conectar_servidor(host, puerto)
+  enviar_mensaje_loop(cliente2,ruta_archivo_tmp_maestro,entrada,esperada)
+  msj2 = leer_mensajes(cliente2)   
     #print("servidor" + cachar.decode('utf-8'))
 
-    comparar_resultados(msj,msj2,request)
+  comparar_resultados(msj,msj2,request)
+  
+
+  models.ArchivosA.objects.filter(usuario_id=obteneralumno).update(estado=)
 
     #print("Paso la linea de la conexion a el servidor", cliente)
     #if msj == msj2:
     #    print("Los resultados son iguales")
     #else:
     #    print("No son iguLes")
-    return render(request,t)
+
+
+def informacion_actividad(request, id):
+   t = 'informacion_actividad.html';
+   bots =  models.Practicas.objects.get(id=id)
+   verificar_script(bots.id)
+   return render(request,t,{'bots':bots})
+
 
 
 def mandar_mensaje_al_bot(request):

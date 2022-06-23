@@ -39,6 +39,8 @@ class IntentosIP(models.Model):
 class ArchivosA(models.Model):
       upload = models.FileField(upload_to='Practicas/')
       usuario=models.ForeignKey(Alumnos, on_delete=models.CASCADE)
+      estado=models.CharField(max_length = 20, null=True)
+
 
       def get_file(self):
             return '{}{}'.format(settings.MEDIA_URL, self.upload)
