@@ -29,7 +29,14 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 def conectar_servidor(host, puerto):
-    # socket para IP v4
+    """
+    Funcion que se utiliza para poder realizar la conexion al servidor
+
+    Keyword Arguments:
+    host: str
+    puerto: int
+    returns: cliente 
+    """
     cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         cliente.connect((host, int(puerto)))
@@ -41,16 +48,40 @@ def conectar_servidor(host, puerto):
         exit()
 
 def leer_mensajes(cliente):
-        mensaje = mensajes.leer_mensaje(cliente)
-        return mensaje.decode('utf-8')
+    """
+    Funcion que permite leer los mensajes y mandarlos decodificados
+
+    Keyword Arguments:
+    ip: str
+    returns: mensaje.decode
+    """
+     mensaje = mensajes.leer_mensaje(cliente)
+     return mensaje.decode('utf-8')
 
 
 def enviar_mensaje_loop(cliente,ruta,esperada,salida):
-        mensaje = ruta + '|' + esperada + '|' + salida
-        mensaje = mensaje.encode('utf-8')
-        mensajes.mandar_mensaje(cliente, mensaje)
+    """
+    Funcion que realiza el envio de mensajes al servidor de pruebas de scripts
+
+    Keyword Arguments:
+    cliente: str
+    ruta: str
+    esperada: str
+    salida: str
+    returns: None
+    """
+    mensaje = ruta + '|' + esperada + '|' + salida
+    mensaje = mensaje.encode('utf-8')
+    mensajes.mandar_mensaje(cliente, mensaje)
 
 def copiar_ruta_tmp(ruta):
+    """
+    Funcion que permite copiar  las ruta que se nos proporciona
+
+    Keyword Arguments:
+    ruta: str
+    returns: bool
+    """
     lista = r"/evaluacion/EvalScript-*"
     directorio = glob.glob(lista)
     ruta_directorio = ''.join(directorio)
@@ -59,6 +90,13 @@ def copiar_ruta_tmp(ruta):
     return ruta_copia
 
 def comparar_script(entradaScript, esperadaScript, archivo):
+    """
+    Funcion que se funcion para llevar acabo la comparcion de scripts
+
+    Keyword Arguments:
+    ip: str
+    returns: bool
+    """
     os.chmod(archivo, 0o755)
     comando = [archivo, entradaScript]
     salida = subprocess.Popen(comando, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -70,6 +108,15 @@ def comparar_script(entradaScript, esperadaScript, archivo):
         return False
 
 def comparar_resultados(res_maestro, res_alumno,request):
+    """
+    Funcion que permite la comparacion de los resultados de la ejecucion de los script
+    del alumno y del maestro 
+    Keyword Arguments:
+    res_maestro: str
+    res_alumno: str
+    request: --
+    returns: bool
+    """
     if res_alumno == res_maestro:
         correcto = 'Correcto'
         messages.success(request, "Los resultados son iguales")
@@ -83,6 +130,12 @@ def comparar_resultados(res_maestro, res_alumno,request):
 
 @login_requerido_profesor
 def crear_actividad(request):
+    """
+    Vista que permite la definicion de actividades 
+    Keyword Arguments:
+    request --
+    returns: HTTP_Response
+    """
     t = 'crear_ejercicio.html'
     if request.method == 'GET':
         return render(request,t)
@@ -101,19 +154,40 @@ def crear_actividad(request):
 
 @login_requerido_alumnos
 def listar_ejercicios(request):
+
+    """
+    Vista que permite la visibiliacion de la lista de ejercicios definidos por el maestro 
+    Keyword Arguments:
+    request --
+    returns: HTTP_Response
+
+    """
     t = 'listar_ejercicios.html'
     bots =  models.Practicas.objects.all()
     return render(request,t,{'bots':bots})
 
 @login_requerido_profesor
 def listar_alumnos(request):
+    """
+    Vista que permite la visibiliacion de la lista de los alumnos que subieron las actidades 
+    Keyword Arguments:
+    request --
+    returns: HTTP_Response
+    """
     t = 'listar_alumnos.html'
     alumnos = models.ArchivosA.objects.all()
     return render(request,t,{'alumnos':alumnos})
 
 
 @login_requerido_alumnos
+   
 def verificar_scripts(request, id):
+  """
+  Vista que permite verificacion de script que se subio  
+  Keyword Arguments:
+  request --
+  returns: HTTP_Response
+  """
   t = 'subir_ejercicios.html'
   host = '0.0.0.0'
   puerto = 8002
@@ -159,6 +233,13 @@ def verificar_scripts(request, id):
 
 
 def mandar_mensaje_al_bot(request):
+    """
+    Funcion que permite mandar el token al bot alumno para poder permitir la autenticacion
+
+    Keyword Arguments:
+    request --
+    returns:--
+    """
     nombre = request.session.get('nombre','anonimo')
     datos_guardados = models.Alumnos.objects.get(NombreAlumno=nombre)
     Chat_id = datos_guardados.Chat_id
@@ -171,6 +252,13 @@ def mandar_mensaje_al_bot(request):
     models.Alumnos.objects.filter(NombreAlumno=nombre).update(Token_Env=mensaje_bot, Token_Tem=datetime.datetime.now(), Estado_token="Valido")
 
 def mandar_mensaje_al_bot_profesor(request):
+    """
+    Funcion que permite mandar el token al bot profesor para poder permitir la autenticacion
+
+    Keyword Arguments:
+    request --
+    returns:--
+    """
     nombre = request.session.get('nombre','anonimo')
     datos_guardados = models.Profesor.objects.get(NombreProfesor=nombre)
     Chat_id = datos_guardados.Chat_id
@@ -184,6 +272,13 @@ def mandar_mensaje_al_bot_profesor(request):
     
 
 def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
+    """
+    Funcion que permite diminucion del timepo de vida de toke que se le fue enviado al bot
+
+    Keyword Arguments:
+    tiempo_almacenado: datatime
+    return: time
+    """
     tiempo_actual = datetime.datetime.now(timezone.utc)
     diferencia = tiempo_actual - tiempo_almacenado
     logging.info("Se disminuye el tiempo de vida del token")
@@ -191,6 +286,13 @@ def disminuir_tiempo_actual_yalmaceno(tiempo_almacenado):
 
 @login_requerido
 def verificar_token(request):
+    """
+    Vista que permite la verificacion del token mandado al alumno y pemirte la autenticacion del mismo
+
+    Keyword Arguments:
+    request --
+    returns: HTTP_Response
+    """
     t = 'verficiacion_token.html'
     nombre = request.session.get('nombre','anonimo')
     if request.method == 'GET':
@@ -227,6 +329,13 @@ def verificar_token(request):
 
 @login_requerido            
 def verificar_token_maestro(request):
+    """
+    Vista que permite la verificacion del token mandado al maestro y pemirte la autenticacion del mismo
+
+    Keyword Arguments:
+    request --
+    returns: HTTP_Response
+    """
     t = 'verficiacion_token_maestro.html'
     nombre = request.session.get('nombre','anonimo')
     if request.method == 'GET':
@@ -341,18 +450,39 @@ def login(request):
         
 @login_requerido2
 def logout(request):
+    """
+    Vista que permite el cirre de sesion del usuario que se encuentre en el sistema.
+
+    Keyword Arguments:
+    request --
+    returns: HTTP_Response
+    """
     request.session['logueado'] = False
     request.session.flush()
     logging.info("El usuario cerro session")
     return redirect('/login')
  
 def password_valido(password, pass_hasheado, salt):
-   binario = (password + salt).encode('utf-8')
-   hasher = hashlib.sha256()
-   hasher.update(binario)
-   return hasher.hexdigest() == pass_hasheado
+    """
+    Determina si la ip ya está en la BD.
+
+    Keyword Arguments:
+    ip: str
+    returns: bool
+    """
+    binario = (password + salt).encode('utf-8')
+    hasher = hashlib.sha256()
+    hasher.update(binario)
+    return hasher.hexdigest() == pass_hasheado
 
 def verificacion_de_contrasenas(alumno):
+    """
+    Funcion que permite saber los errores que se tiene la contraseña del alumno al momento de ser introducida 
+
+    Keyword Arguments:
+    alumno: object
+    returns: errores_contrasena
+    """
     caracteres_especiales = "[@_!#$%^&*()<>?/|}{~:]";
     errores_contrasena = []
     if ' ' in alumno.Contraseña:
@@ -368,6 +498,13 @@ def verificacion_de_contrasenas(alumno):
     return errores_contrasena            
 
 def Registro_Alumnos(request):
+    """
+    Vista que permite el registro de usuario en el sistema
+
+    Keyword Arguments:
+    request --
+    returns: HTTP_Response
+    """
     t = 'registro_alumnos.html';
     if request.method == 'GET':
        return render(request,t,{})
@@ -406,6 +543,13 @@ def Registro_Alumnos(request):
 
 
 def verificacion_de_contrasenas_profesor(profesor):
+    """
+    Funcion que permite saber los errores que se tiene la contraseña del profesor al momento de ser introducida 
+
+    Keyword Arguments:
+    alumno: object
+    returns: errores_contrasena
+    """
     caracteres_especiales = "[@_!#$%^&*()<>?/|}{~:]";
     errores_contrasena = []
     if ' ' in profesor.Contraseña:
@@ -421,6 +565,13 @@ def verificacion_de_contrasenas_profesor(profesor):
     return errores_contrasena
 
 def recoleccion_de_errores_del_registro_profesor(profesor):
+    """
+    Determina si la ip ya está en la BD.
+
+    Keyword Arguments:
+    ip: str
+    returns: bool
+    """
     errores = []
     if profesor.NombreProfesor == '':
               errores.append('El nombre del usuario esta vacio')
@@ -441,6 +592,13 @@ def recoleccion_de_errores_del_registro_profesor(profesor):
 
 
 def recoleccion_de_errores_del_registro(alumno):
+    """
+    Funcion qu permite saber cuales son los errores al momento de llevar acabo el llenado de la informacion del formulario
+
+    Keyword Arguments:
+    alumno: object
+    returns: errores[]
+    """
     errores = []
     if alumno.NombreAlumno == '':
               errores.append('El nombre del usuario esta vacio')
@@ -459,9 +617,14 @@ def recoleccion_de_errores_del_registro(alumno):
     errores += errores_contrasena
     return errores
 
-
 def get_client_ip(request):
-    print("Entro a la funcion para obtener la ip del usurio")
+    """
+    Funcion que permite la optencion de l ip del usuario que se esta conectando al sistema
+
+    Keyword Arguments:
+    request --
+    returns: str
+    """
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
@@ -470,11 +633,25 @@ def get_client_ip(request):
     return ip
 
 def es_ip_conocida(ip: str):
+    """
+    Funcion que permite saber si a ip ya esta entre las que ya han entrada al sistema 
+
+    Keyword Arguments:
+    ip: str
+    returns: bool
+    """
     registros = models.IntentosIP.objects.filter(ip=ip)
     return len(registros) != 0
 
 
 def guardar_peticion(ip: str, intentos: int):
+    """
+    Determina si la ip ya está en la BD.
+
+    Keyword Arguments:
+    ip: str
+    returns: None
+    """
     fecha_actual = datetime.datetime.now()
     if not es_ip_conocida(ip):
         entrada = models.IntentosIP(ip=ip, intentos=1,timestamp=fecha_actual)
@@ -486,6 +663,13 @@ def guardar_peticion(ip: str, intentos: int):
     registro.save()
    
 def esta_tiempo_en_ventana(timestamp):
+    """
+    Funcion que permite saber el tiempo que ha estado en la ventana del navegador    
+
+    Keyword Arguments:
+    ip: datatime
+    returns: bool
+    """
     momento_actual = datetime.datetime.now(timezone.utc)
     resta = momento_actual - timestamp
     if resta.seconds < conf.VENTANA_SEGUNDOS_INTENTOS_PETICION:
