@@ -90,57 +90,62 @@ def crear_actividad(request):
         entrada = request.POST.get('entrada', '')
         esperada = request.POST.get('esperada','')
         archivo = request.FILES.get('archivosubido')
-
-        practica = models.Practicas(NombrePractica=titulo,Descripcion=descripcion,Entrada=entrada, Esperada=esperada, Archivo=archivo)
+        nombre = request.session.get('nombre')
+        id_profe = models.Profesor.objects.get(NombreProfesor=nombre)
+        practica = models.Practicas(NombrePractica=titulo,Descripcion=descripcion,Entrada=entrada, Esperada=esperada, Archivo=archivo, practica_profesor_id=id_profe.id)
 
         practica.save()
 
         return render(request, t)
 
-
+def listar_ejercicios(request):
+    t = 'listar_ejercicios.html'
+    bots =  models.Practicas.objects.all()
+    return render(request,t,{'bots':bots})
 
 
 @login_requerido_alumnos
-def verificar_scripts(practica_id):
+def verificar_scripts(request, id):
+  t = 'SubirEjercicios.html'
   host = '0.0.0.0'
   puerto = 8002
-  id_actividad = models.Practicas.objects.all()
-    
-  practica = models.Practicas.objects.get(pk=id_actividad.pk)
-    
-  entrada = practica.Entrada
-  esperada = practica.Esperada
-  file = request.FILES.get('archivosubido')
-  obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
-  archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
-  archivo.save()
+  if request.method == 'GET':
+       bot = models.Practicas.objects.get(id=id)
+       return render(request,t,{'bot':bot})
+  elif request.method == 'POST':
+    bot = models.Practicas.objects.get(id=id)
+    nombre_usuario = request.session.get('nombre')
+    practica = models.Practicas.objects.get(pk=id)
+    entrada = practica.Entrada
+    esperada = practica.Esperada
+    file = request.FILES.get('archivosubido')
+    obtener_alumno = models.Alumnos.objects.get(NombreAlumno=nombre_usuario)
+    archivo = models.ArchivosA(upload=file, usuario=obtener_alumno)
+    archivo.save()
 
-  obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=obtener_alumno)
+    obj = models.ArchivosA.objects.get(upload=archivo.upload, usuario_id=obtener_alumno)
 
-  ruta = obj.upload.path
-  rutaM = practica.Archivo.path
+    ruta = obj.upload.path
+    rutaM = practica.Archivo.path
 
-  ruta_archivo_tmp = copiar_ruta_tmp(ruta)
-  ruta_archivo_tmp_maestro = copiar_ruta_tmp(rutaM)
+    ruta_archivo_tmp = copiar_ruta_tmp(ruta)
+    ruta_archivo_tmp_maestro = copiar_ruta_tmp(rutaM)
 
     #alumnoA = comparar_script(entrada, esperada, ruta_archivo_tmp)
     #maestroA = comparar_script(entrada, esperada, rutaM)
 
-  cliente = conectar_servidor(host, puerto)
+    cliente = conectar_servidor(host, puerto)
     #hilo = threading.Thread(target=leer_mensajes, args=(cliente,))
     #hilo.start()
-  enviar_mensaje_loop(cliente,ruta_archivo_tmp,entrada,esperada)
-  msj = leer_mensajes(cliente)
+    enviar_mensaje_loop(cliente,ruta_archivo_tmp,entrada,esperada)
+    msj = leer_mensajes(cliente)
 
-  cliente2 = conectar_servidor(host, puerto)
-  enviar_mensaje_loop(cliente2,ruta_archivo_tmp_maestro,entrada,esperada)
-  msj2 = leer_mensajes(cliente2)   
+    cliente2 = conectar_servidor(host, puerto)
+    enviar_mensaje_loop(cliente2,ruta_archivo_tmp_maestro,entrada,esperada)
+    msj2 = leer_mensajes(cliente2)   
     #print("servidor" + cachar.decode('utf-8'))
 
-  comparar_resultados(msj,msj2,request)
-  
-
-  models.ArchivosA.objects.filter(usuario_id=obteneralumno).update(estado=)
+    comparar_resultados(msj,msj2,request)
 
     #print("Paso la linea de la conexion a el servidor", cliente)
     #if msj == msj2:
@@ -148,13 +153,7 @@ def verificar_scripts(practica_id):
     #else:
     #    print("No son iguLes")
 
-
-def informacion_actividad(request, id):
-   t = 'informacion_actividad.html';
-   bots =  models.Practicas.objects.get(id=id)
-   verificar_script(bots.id)
-   return render(request,t,{'bots':bots})
-
+    return render(request,t,{'bot':bot})
 
 
 def mandar_mensaje_al_bot(request):
@@ -209,7 +208,7 @@ def verificar_token(request):
                   errores =['Token ya utilizado']
                   return render(request,t,{'errores': errores})
                elif alumno.Tipocuenta == 'Alumno':
-                  return redirect('/verificar_scripts')
+                  return redirect('/listar_ejercicios')
                
                      
            except:
@@ -217,15 +216,6 @@ def verificar_token(request):
                return render(request, "login.html", {'errores': errores})
         else:
            return HttpResponse("Agotaste tus intentos espera 1 minuto")
-
-
-
-@login_requerido_alumnos
-def lista_ejercicios(request):
-    t = 'lista_ejercicios.html'
-    bots =  models.Practicas.objects.all()
-    return render(request,t,{'bots':bots})
-    
 
 @login_requerido            
 def verificar_token_maestro(request):

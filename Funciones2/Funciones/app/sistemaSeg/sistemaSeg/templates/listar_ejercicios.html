@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block titulo %}Registro de Actividade{% endblock %}
+{% block encabezado %}Registro de Actividades diponibles{% endblock %}
+{% block contenido %}
+ <article class="container">
+          <div class="table-responsive">
+            <table class="table table table-dark">
+              <thead>
+                <tr>
+                    <th>Nombre de la Actividad</th>
+                    <th>Descripcion</th>
+                    <th>Entrada esperada</th>
+                    <th>Salida</th>
+                    <th>Accion</th>
+                  </tr>
+                </thead>
+    <tbody>
+
+ {% for bot in bots %}
+                <tr>
+                  <td>{{ bot.id }}</td>
+                  <td>{{ bot.NombrePractica }}</td>
+                  <td>{{ bot.Descripcion }}</td>
+                  <td>{{ bot.Entrada }}</td>
+                  <td>{{ bot.Esperada }}</td>
+                  <td>
+                     <a class="btn btn-info" href="{% url 'verificar_script' bot.id %}">seleccionar</a>
+                  </td>
+                </tr>
+   {% endfor %}
+              </tbody>
+                </div>
+                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+                   <div class="container-fluid">
+                   </div>
+                 </nav>
+
+{% endblock %}

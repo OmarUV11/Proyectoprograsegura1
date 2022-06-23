@@ -21,15 +21,14 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('',RedirectView.as_view(url='login', permanent=True)),
-    path('verificar_scripts',verificar_scripts),
+    path('verificar_scripts/<id>',verificar_scripts, name='verificar_script'),
     path('login',login),
     path('Registro_Alumnos',Registro_Alumnos),
     path('verificar_token',verificar_token),
     path('logout',logout),
     path('crear_actividad', crear_actividad),
     path('verificar_token_maestro',verificar_token_maestro),
-    path('lista_ejercicios',lista_ejercicios),
-    path('informacion_actividad/<id>',informacion_actividad, name='info'),
+    path('listar_ejercicios',listar_ejercicios),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
