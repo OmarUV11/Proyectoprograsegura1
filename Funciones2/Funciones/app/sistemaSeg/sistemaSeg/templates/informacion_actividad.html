@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{%block titulo%}Verificacion de Scripts{% endblock%}
+{% block contenido%}
+
+
+<form action="/informacion_actividad" method="POST">
+{% csrf_token %}
+<div class="mb-3 mt-3">
+                 <h1 style="background-color:powderblue;">{{ bots.NombrePractica }}</h1>
+
+</div>
+<div class="mb-3 mt-3">
+     <label for="Entrada" class="form-label">Descripcion:</label>
+      <p style="background-color:powderblue;">{{ bots.Descripcion}}</p>
+</div>
+<div class="mb-3 mt-3">
+     <input type="file" name="archivosubido" accept=".sh">
+</div>
+<button type="submit" class="btn btn-primary">Subir</button>
+<form>
+{% endblock %}

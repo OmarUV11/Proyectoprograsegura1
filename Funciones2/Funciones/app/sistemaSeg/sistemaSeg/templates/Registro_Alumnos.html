@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block titulo %}Regristro Usuarios{% endblock %}
+{% block encabezado %}Registrar Usuarios{% endblock %}
+{% block contenido %}
+{%  if errores %}
+        <div class='container' id="errores">
+            <div class="card bg-danger text-white">Se han encontrado los siguientes errores:</div>
+            <div class="alert alert-danger">
+                <ol>
+                    {% for error in errores %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+{%  endif %}
+
+
+
+
+<form action="/Registro_Alumnos" method="POST">
+  {% csrf_token %}
+ <div class="contenedor">
+  <div class="mb-3 mt-3">
+    <label style="color:#000000" for="nombrebot" class="form-label">Nombre del Alumno:</label>
+    <input type="text" class="form-control" id="nombreAlumno" placeholder="Nombre del Alumno" name="nombreAlumno">
+  </div>
+
+  <div class="mb-3 mt-3">
+    <label style="color:#000000"  for="host" class="form-label">Matricula del Alumno:</label>
+    <input type="text" class="form-control" id="Matricula" placeholder="Matricula" name="Matricula">
+  </div>
+
+  <div class="mb-3 mt-3">
+    <label style="color:#000000" for="Contrasena" class="form-label">Contraseña:</label>
+    <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña del Alumno" name="Contrasena">
+  </div>
+
+  <div class="mb-3 mt-3">
+    <label style="color:#000000" for="Tipo de cuenta" class="form-label">Alumno o Maestro:</label>
+    <select name="TipoCuenta">
+    <option>Alumno</option>
+    <option selected>Maestro</option>
+    </select>
+  </div>
+  
+  <div class="mb-3 mt-3">
+    <label style="color:#000000" for="Chat_id" class="form-label">Chat_Id de Bot de telegram:</label>
+    <input type="text" class="form-control" id="Chat_id" placeholder="Chat_id" name="Chat_id">
+  </div>
+
+  <div class="mb-3 mt-3">
+    <label style="color:#000000" for="token_tel" class="form-label">Token del bot del usurio:</label>
+    <input type="text" class="form-control" id="token_tel" placeholder="Token Bot Telegram" name="token_tel">
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Registrar</button>
+  </div>
+</form>
+
+
+{% endblock %}
